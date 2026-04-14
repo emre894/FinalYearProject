@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+
+# web
+web/node_modules
+web/.next
+web/out
+web/.env*
+web/.vercel
+web/coverage
+web/build
+web/*.tsbuildinfo
+web/next-env.d.ts
+
+# ml
+ml/venv/
+ml/__pycache__/
+ml/.pytest_cache/
+ml/**/*.pyc
+ml/*.pyc
+
+# logs
+*.log

@@ -1,0 +1,623 @@
+description,amount,category
+"SALARY PAYROLL SERVICES - REF ID 9928",3250.00,Income
+"HMRC TAX REFUND #4432",142.50,Income
+"UPWORK GLOBAL INC - PMT",450.00,Income
+"Airbnb Payout *882",210.00,Income
+"Vanguard Div - VUSA",65.20,Income
+"Dividend - Apple Inc",12.45,Income
+"STEVENS & CO MTHLY PAY",2800.00,Income
+"FIVERR INTL LTD #REF9",85.00,Income
+"ebay sales proceeds - user99",44.99,Income
+"CASH DEP BRANCH 442",100.00,Income
+"Q4 BONUS - COMPANY LTD",500.00,Income
+"BANK INTEREST EARNED",5.62,Income
+"WIZ AIR REIMBURSE REF:XJ9",45.00,Income
+"RENT: L&Q HOUSING PMT",-950.00,Housing
+"HSBC MORTGAGE *8832",-1120.00,Housing
+"COUNCIL TAX DEPT - DD",-145.00,"Utilities & Bills"
+"HOME INS DIRECT - DD",-32.40,Housing
+"shelter housing assoc donation",-15.00,"Other / Unknown"
+"FURNITURE VILLAGE POS",-450.00,"Shopping & Retail"
+"B&Q WAREHOUSE #092",-56.20,"Shopping & Retail"
+"BRITANNIA MTG PYMT REF44",-890.00,Housing
+"SAVILLS ESTATE AGENTS FEES",-125.00,Housing
+"wayfair.co.uk - online",-89.99,"Shopping & Retail"
+"DUNELM MILL STORES POS",-34.50,"Shopping & Retail"
+"IKEA LIMITED LONDON",-120.00,"Shopping & Retail"
+"BRITISH GAS - DD PAYMT",-82.15,"Utilities & Bills"
+"OCTOPUS ENERGY BILL",-95.00,"Utilities & Bills"
+"THAMES WATER SERVICES LTD",-34.20,"Utilities & Bills"
+"EE MOBILE - MONTHLY",-45.00,"Utilities & Bills"
+"BT BROADBAND & TV",-32.99,"Utilities & Bills"
+"O2 TELEFONICA UK DD",-25.00,"Utilities & Bills"
+"SKY DIGITAL - SUBS",-68.00,"Utilities & Bills"
+"TV LICENSING - QUARTERLY",-13.25,"Utilities & Bills"
+"VODAFONE LTD MOBILE",-38.50,"Utilities & Bills"
+"EDF ENERGY DIRECT",-110.00,"Utilities & Bills"
+"VIRGIN MEDIA PAYMT",-52.00,"Utilities & Bills"
+"THREE MOBILE TOPUP",-15.00,"Utilities & Bills"
+"DD-OCTOPUS-ENERGY",-112.00,"Utilities & Bills"
+"tesco store #4832",-45.60,Groceries
+"SAINSBURYS S/MKTS - POS",-62.10,Groceries
+"LIDL UK 0942 - STORES",-28.45,Groceries
+"ALDI STORES 22 - GROCERY",-33.20,Groceries
+"ASDA SUPERSTORE #112",-58.90,Groceries
+"WAITROSE & PARTNERS ONLINE",-74.15,Groceries
+"M&S FOOD - LONDON",-19.50,Groceries
+"OCADO RETAIL LTD",-105.30,Groceries
+"CO-OP GROUP FOOD - DD",-12.40,Groceries
+"ICELAND FOODS LTD STORES",-22.00,Groceries
+"WHOLEFOODS MKT LONDON",-48.25,Groceries
+"MORRISONS STORE POS",-51.10,Groceries
+"POS 1192 SAINSBURYS",-14.20,Groceries
+"DELIVEROO.CO.UK - ORDER",-24.50,"Food & Dining"
+"JUST EAT.CO.UK ONLINE",-18.95,"Food & Dining"
+"POS 4832 COSTA",-3.85,"Food & Dining"
+"STARBUCKS COFFEE #221",-4.75,"Food & Dining"
+"MCDONALDS RESTAURANT LONDON",-12.40,"Food & Dining"
+"WAGAMAMA - POS",-42.00,"Food & Dining"
+"UBER EATS *HELP.UBER.COM",-21.20,"Food & Dining"
+"NANDOS CHICKEN REST",-34.60,"Food & Dining"
+"PIZZA EXPRESS LTD",-29.00,"Food & Dining"
+"PRET A MANGER - STORES",-8.50,"Food & Dining"
+"GREGGS PLC - POS",-5.20,"Food & Dining"
+"FIVE GUYS BURGERS",-16.50,"Food & Dining"
+"LOCAL PUB GASTRO - DINING",-35.40,"Food & Dining"
+"UBER TRIP HELP.UBER.COM",-18.40,Transportation
+"TFL TRAVEL CHARGE",-8.20,Transportation
+"SHELL FUEL STATION #99",-65.00,Transportation
+"TRAINLINE TICKETS REF:Z2",-42.50,Transportation
+"LIME RIDE - APP",-6.40,Transportation
+"BP CONNECT STATION",-55.20,Transportation
+"NATIONAL EXPRESS BUS",-22.00,Transportation
+"CITY TAXI SERVICES LONDON",-14.50,Transportation
+"EURO TUNNEL CHNEL",-85.00,Transportation
+"AVANTI WEST COAST TRAIN",-120.00,Transportation
+"BOLT.EU RIDE - APP",-11.30,Transportation
+"NCP CAR PARK - POS",-12.00,Transportation
+"TEXACO PETROL POS",-48.00,Transportation
+"UBER TRIP MANCHESTER",-22.10,Transportation
+"tfl.gov.uk/cp ref:12",-2.50,Transportation
+"DD NETFLIX.COM",-10.99,Subscriptions
+"SPOTIFY LTD - MTHLY",-9.99,Subscriptions
+"AMAZON PRIME MBRSHIP",-8.99,Subscriptions
+"DISNEY PLUS SUBSCRIPTION",-7.99,Subscriptions
+"ADOBE PHOTOGRAPHY PLAN",-9.98,Subscriptions
+"THE GUARDIAN SUB DD",-12.00,Subscriptions
+"YOUTUBE PREMIUM - GOOGLE",-11.99,Subscriptions
+"AUDIBLE.CO.UK AMZN",-7.99,Subscriptions
+"XBOX GAME PASS MSFT",-10.99,Subscriptions
+"PLAYSTATION PLUS SONY",-6.99,Subscriptions
+"NEW YORK TIMES DIGITAL",-4.00,Subscriptions
+"LINKEDIN PREMIUM - MTH",-24.99,Subscriptions
+"APPLE MUSIC SUB",-10.99,Subscriptions
+"SAGE SOFTWARE DD",-25.00,Subscriptions
+"AMZN MKTPLACE PMTS",-34.99,"Shopping & Retail"
+"ZARA RETAIL UK LTD",-65.00,"Shopping & Retail"
+"ASOS.COM ONLINE",-42.50,"Shopping & Retail"
+"ARGOS LTD #882",-89.00,"Shopping & Retail"
+"APPLE STORE ONLINE PMT",-129.00,"Shopping & Retail"
+"H&M HENNES & MAURITZ",-28.00,"Shopping & Retail"
+"JOHN LEWIS PLC LONDON",-145.00,"Shopping & Retail"
+"TK MAXX STORES - POS",-36.20,"Shopping & Retail"
+"NEXT RETAIL LTD POS",-54.00,"Shopping & Retail"
+"CURRYS PC WORLD #992",-299.00,"Shopping & Retail"
+"ebay O21-332 SHOP",-18.40,"Shopping & Retail"
+"SPORTS DIRECT STORE",-22.50,"Shopping & Retail"
+"JD SPORTS ONLINE PMT",-75.00,"Shopping & Retail"
+"WHSMITH TRAVEL STORES",-6.50,"Shopping & Retail"
+"pAyPal Amazon.com",-12.99,"Shopping & Retail"
+"AMZN Mktp UK2J98",-32.99,"Shopping & Retail"
+"AMZN MKTPLACE PMTS REF9",-55.00,"Shopping & Retail"
+"ODEON CINEMAS LONDON",-15.50,"Entertainment & Recreation"
+"VUE ENTERTAINMENT POS",-12.00,"Entertainment & Recreation"
+"STEAMGAMES.COM - VALV",-39.99,"Entertainment & Recreation"
+"PUREGYM MONTHLY DD",-24.99,"Entertainment & Recreation"
+"BET365 GAMING ONLINE",-10.00,"Entertainment & Recreation"
+"TICKETMASTER UK REF:Z",-85.00,"Entertainment & Recreation"
+"NINTENDO ESHOP PMT",-14.99,"Entertainment & Recreation"
+"DAVID LLOYD CLUBS MTH",-95.00,"Entertainment & Recreation"
+"THE NATIONAL TRUST SUB",-7.00,"Entertainment & Recreation"
+"BRITISH MUSEUM SHOP",-18.00,"Entertainment & Recreation"
+"TOPGOLF UK - POS",-26.00,"Entertainment & Recreation"
+"EVENTBRITE TICKETS APP",-45.00,"Entertainment & Recreation"
+"GOLF RANGE FEES - POS",-15.00,"Entertainment & Recreation"
+"BOOTS THE CHEMIST #99",-14.20,"Personal Care"
+"SUPERDRUG STORES LONDON",-8.50,"Personal Care"
+"LOOKFANTASTIC.COM PMT",-32.00,"Personal Care"
+"TONI & GUY SALON",-55.00,"Personal Care"
+"SEPHORA UK ONLINE",-42.99,"Personal Care"
+"HOLLAND & BARRETT POS",-12.40,"Personal Care"
+"SPACE NK LONDON STORES",-68.00,"Personal Care"
+"THE BODY SHOP POS",-15.00,"Personal Care"
+"RUSH HAIR & BEAUTY",-45.00,"Personal Care"
+"KIKO MILANO STORES",-9.50,"Personal Care"
+"CULT BEAUTY LTD",-38.00,"Personal Care"
+"BARBER SHOP CITY CASH",-22.00,"Personal Care"
+"DERMALOGICA UK ONLINE",-45.00,"Personal Care"
+"LLOYDS PHARMACY #22",-9.65,"Healthcare & Medical"
+"BUPA HEALTHCARE - DD",-45.00,"Healthcare & Medical"
+"VISION EXPRESS OPTIC",-120.00,"Healthcare & Medical"
+"NHS DENTAL SVCS CHARGE",-25.80,"Healthcare & Medical"
+"SPECSAVERS OPTICIANS",-15.00,"Healthcare & Medical"
+"SANTANDER HEALTH INS",-18.20,"Healthcare & Medical"
+"DENTAL CARE CLINIC PMT",-65.00,"Healthcare & Medical"
+"SPIRE HEALTHCARE PVT",-150.00,"Healthcare & Medical"
+"PHARMACY2U ONLINE",-12.50,"Healthcare & Medical"
+"BETTERHELP COUNSEL MTH",-40.00,"Healthcare & Medical"
+"PURE OPTICAL CONTACTS",-19.99,"Healthcare & Medical"
+"DRS SURGERY APPT FEE",-20.00,"Healthcare & Medical"
+"VANGUARD INVEST ISA",-200.00,"Savings & Investments"
+"NUTMEG SAVINGS DD",-100.00,"Savings & Investments"
+"ISA TRANSFER - LLOYDS",-500.00,"Savings & Investments"
+"TRADING 212 DEPOSIT",-50.00,"Savings & Investments"
+"COINBASE.COM CRYPTO",-75.00,"Savings & Investments"
+"HARGREAVES LANSDOWN SI",-150.00,"Savings & Investments"
+"FIDELITY INTL FUNDS",-100.00,"Savings & Investments"
+"PENSION TOP UP - MTHLY",-250.00,"Savings & Investments"
+"PLUM SAVINGS - APP",-25.00,"Savings & Investments"
+"MONEYBOX ISA SAVINGS",-40.00,"Savings & Investments"
+"REVOLUT SAVINGS VAULT",-100.00,"Savings & Investments"
+"NS&I PREMIUM BONDS",-50.00,"Savings & Investments"
+"BANK TRANSFER JOHN SMITH",-45.00,Transfers
+"PAYPAL *FRIEND PAYMENT",-25.50,Transfers
+"REVOLUT SEND MONEY - ID",-120.00,Transfers
+"MONZO PAYMENT TO FRIEND",-15.00,Transfers
+"TRANSFER TO JAMES REF1234",-200.00,Transfers
+"Settle Up Bill - Lunch",-12.40,Transfers
+"XFER TO SARAH - BDAY",-30.00,Transfers
+"MONZO PAY: Dave Dinner",-18.50,Transfers
+"Revolut *992 - Payment",-85.00,Transfers
+"ZELLE PMT TO ALICE",-40.00,Transfers
+"PAYPAL *GIFT PMT",-50.00,Transfers
+"TRANSFER REF:HOUSEHOLD",-400.00,Transfers
+"CASH WITHDRAWAL ATM #9",-20.00,"Other / Unknown"
+"PAYPAL *EBAY FEES",-14.50,"Other / Unknown"
+"TRANSFERWISE LTD FEE",-8.00,"Other / Unknown"
+"POST OFFICE LTD STAMPS",-4.20,"Other / Unknown"
+"CHARITY DONATION REDX",-10.00,"Other / Unknown"
+"FOREIGN EXCH FEE - TRAV",-1.50,"Other / Unknown"
+"BANK ACCOUNT FEE MTHLY",-5.00,"Other / Unknown"
+"IZ *PARKING PERMIT CITY",-40.00,"Other / Unknown"
+"SUMUP *MARKET STALL",-12.00,"Other / Unknown"
+"ZETTLE *COFFEE CART",-4.50,"Other / Unknown"
+"LAUNDRY SERVICES POS",-6.00,"Other / Unknown"
+"MISC DIRECT DEBIT",-15.00,"Other / Unknown"
+"GOOGLE IRELAND - ADSENSE PMT",120.50,Income
+"SANTANDER INTEREST - FEB",1.45,Income
+"PAYROLL: NEXUS CORP REF:44",2450.00,Income
+"CASH DEPOSIT *2281",200.00,Income
+"TAX REBATE REF:99201",310.20,Income
+"RENT: SKYLINE APTS DD",-1150.00,Housing
+"MORTGAGE PMT #44921",-980.00,Housing
+"HOME INS - AVIVA PLC",-28.50,Housing
+"CITY COUNCIL TAX DD",-135.00,"Utilities & Bills"
+"DD BRITISH GAS ENERGY",-88.40,"Utilities & Bills"
+"BT MOBILE DD PAYMT",-22.00,"Utilities & Bills"
+"O2 REF:992011 BILL",-35.60,"Utilities & Bills"
+"WATER SERVICES DD",-31.00,"Utilities & Bills"
+"VIRGIN MEDIA REF:009",-44.50,"Utilities & Bills"
+"pos 4432 tesco",-8.40,Groceries
+"Sainsburys Local #99",-12.30,Groceries
+"ALDI STORES LTD POS",-42.50,Groceries
+"LIDL UK 8812 STORES",-29.10,Groceries
+"WAITROSE SHOP ONLINE",-88.00,Groceries
+"ASDA SUPERSTORE POS",-15.40,Groceries
+"Marks & Spencer - Food",-22.60,Groceries
+"Ocado Retail Ltd DD",-95.20,Groceries
+"CO-OP FOOD STORES",-6.70,Groceries
+"POS 1192 STARBUCKS",-4.20,"Food & Dining"
+"Costa Coffee - London",-3.95,"Food & Dining"
+"Nandos Rest #882",-32.00,"Food & Dining"
+"Deliveroo *Food Order",-26.40,"Food & Dining"
+"Wagamama POS Ref:1",-38.50,"Food & Dining"
+"Uber Eats #9921",-19.00,"Food & Dining"
+"Five Guys POS London",-15.80,"Food & Dining"
+"Pret A Manger #002",-9.45,"Food & Dining"
+"Wetherspoons POS Pub",-24.30,"Food & Dining"
+"THE IVY RESTAURANT",-110.00,"Food & Dining"
+"tfl.gov.uk/travel",-6.50,Transportation
+"UBER TRIP LONDON",-14.20,Transportation
+"TRAINLINE TICKETS #09",-55.00,Transportation
+"SHELL PETROL STATION",-62.50,Transportation
+"CITY TAXI REF:992",-18.00,Transportation
+"BOLT RIDE - MANCHESTER",-12.40,Transportation
+"BP FUEL POS #442",-45.00,Transportation
+"AMZN Mktp UK2J98",-15.40,"Shopping & Retail"
+"AMAZON UK MARKETPLACE",-44.20,"Shopping & Retail"
+"ZARA ONLINE PMT #88",-68.00,"Shopping & Retail"
+"H&M STORES LONDON",-35.00,"Shopping & Retail"
+"Apple Store Ref:991",-149.00,"Shopping & Retail"
+"CURRYS PC WORLD POS",-55.00,"Shopping & Retail"
+"B&Q STORES #0921",-22.40,"Shopping & Retail"
+"IKEA LIMITED PMT",-85.00,"Shopping & Retail"
+"Wayfair Online Shop",-135.00,"Shopping & Retail"
+"Argos Ltd POS Ref:X",-18.50,"Shopping & Retail"
+"John Lewis & Partners",-62.00,"Shopping & Retail"
+"TK Maxx POS London",-29.00,"Shopping & Retail"
+"pos 1192 boots",-12.40,"Personal Care"
+"Superdrug #8821 POS",-9.50,"Personal Care"
+"BARBER SHOP #2 LONDON",-22.00,"Personal Care"
+"The Beauty Clinic Ref",-45.00,"Personal Care"
+"Sephora UK Online",-55.20,"Personal Care"
+"TONI & GUY SALONS",-72.00,"Personal Care"
+"Rush Hair POS Ref:9",-38.00,"Personal Care"
+"Kiko Milano Store POS",-14.20,"Personal Care"
+"Cult Beauty Ltd Online",-28.50,"Personal Care"
+"Space NK London POS",-44.00,"Personal Care"
+"Holland & Barrett #09",-12.50,"Personal Care"
+"The Body Shop Store",-18.00,"Personal Care"
+"Dermalogica UK PMT",-42.00,"Personal Care"
+"Specsavers Opticians",-115.00,"Healthcare & Medical"
+"NHS Dental Charges",-25.80,"Healthcare & Medical"
+"pos 8821 lloyds pharm",-8.50,"Healthcare & Medical"
+"Bupa Health Ins DD",-45.00,"Healthcare & Medical"
+"Vision Express London",-95.00,"Healthcare & Medical"
+"Boots Pharmacy POS",-14.50,"Healthcare & Medical"
+"Dr Surgery Appt Fee",-30.00,"Healthcare & Medical"
+"Spire Healthcare Pvt",-200.00,"Healthcare & Medical"
+"Pharmacy2U Online PMT",-12.99,"Healthcare & Medical"
+"BetterHelp Mental Health",-40.00,"Healthcare & Medical"
+"Dental Care Clinic POS",-55.00,"Healthcare & Medical"
+"Zelle Pmt: Alice #99",-45.00,Transfers
+"Xfer: Bob Rent Share",-400.00,Transfers
+"Monzo Pay: Sarah Lunch",-12.50,Transfers
+"Revolut *Transfer Dave",-25.00,Transfers
+"Paypal *Friend PMT ID",-15.00,Transfers
+"Bank Xfer: John Smith",-120.00,Transfers
+"Transfer to James Ref:5",-30.00,Transfers
+"Settle Up: Grocery Split",-44.20,Transfers
+"Venmo Pmt: Cinema Tick",-11.00,Transfers
+"Monzo *9921 Payment",-8.50,Transfers
+"Revolut Send ID:4412",-50.00,Transfers
+"Transfer to Mom Ref:Bday",-100.00,Transfers
+"Paypal *GIFT PMT #882",-20.00,Transfers
+"Vanguard ISA Deposit",-200.00,"Savings & Investments"
+"Nutmeg Savings DD PMT",-100.00,"Savings & Investments"
+"Trading 212 Topup",-50.00,"Savings & Investments"
+"Coinbase Crypto Buy",-75.00,"Savings & Investments"
+"Moneybox ISA DD",-40.00,"Savings & Investments"
+"Hargreaves Lansdown",-150.00,"Savings & Investments"
+"Plum Savings App Ref",-25.00,"Savings & Investments"
+"REVOLUT SAVINGS VAULT",-120.00,"Savings & Investments"
+"Pension Contribution",-250.00,"Savings & Investments"
+"NETFLIX.COM DD PMT",-10.99,Subscriptions
+"Spotify Ltd Monthly",-9.99,Subscriptions
+"Amazon Prime Member",-8.99,Subscriptions
+"Disney Plus Digital",-7.99,Subscriptions
+"YouTube Premium Google",-11.99,Subscriptions
+"Adobe Photo Plan DD",-9.98,Subscriptions
+"The Guardian Sub DD",-12.00,Subscriptions
+"Xbox Game Pass Msft",-10.99,Subscriptions
+"Apple Music Monthly",-10.99,Subscriptions
+"Odeon Cinema POS",-15.50,"Entertainment & Recreation"
+"Vue Entertainment #9",-12.40,"Entertainment & Recreation"
+"SteamGames.com Valve",-39.99,"Entertainment & Recreation"
+"PureGym Monthly DD",-24.99,"Entertainment & Recreation"
+"David Lloyd Clubs Mth",-95.00,"Entertainment & Recreation"
+"Ticketmaster Tickets",-88.00,"Entertainment & Recreation"
+"Nintendo eShop POS",-14.99,"Entertainment & Recreation"
+"Bet365 Gaming Online",-20.00,"Entertainment & Recreation"
+"The National Trust",-7.50,"Entertainment & Recreation"
+"TopGolf UK London",-32.00,"Entertainment & Recreation"
+"Atm Withdrawal #441",-40.00,"Other / Unknown"
+"Post Office Stamps",-4.50,"Other / Unknown"
+"Paypal *eBay Fees",-12.40,"Other / Unknown"
+"Transferwise Fee PMT",-5.00,"Other / Unknown"
+"Charity: Red Cross DD",-10.00,"Other / Unknown"
+"Bank Fee: Account Mth",-5.00,"Other / Unknown"
+"Foreign Exchange Fee",-2.15,"Other / Unknown"
+"IZ *Parking City POS",-15.00,"Other / Unknown"
+"SumUp Market Stall",-8.40,"Other / Unknown"
+"Zettle Coffee Cart",-3.50,"Other / Unknown"
+"Laundry Services POS",-12.00,"Other / Unknown"
+"Misc Direct Debit",-22.00,"Other / Unknown"
+"PAYROLL: NEXUS CORP",2450.00,Income
+"HMRC TAX REFUND #88",210.45,Income
+"SANTANDER INTEREST",1.12,Income
+"CASH DEP BRANCH 221",150.00,Income
+"UPWORK GLOBAL PMT",320.00,Income
+"EBAY SALES - USER44",28.50,Income
+"STEVENS & CO SALARY",2800.00,Income
+"DD RENT SKYLINE APTS",-1150.00,Housing
+"HSBC MORTGAGE PMT",-980.00,Housing
+"COUNCIL TAX DD",-142.00,"Utilities & Bills"
+"AVIVA HOME INSURANCE",-31.20,Housing
+"POS 8821 TESCO",-12.45,Groceries
+"Sainsburys Store POS",-22.10,Groceries
+"ALDI GROCERIES #44",-45.00,Groceries
+"Lidl UK Stores #991",-31.50,Groceries
+"Waitrose Online PMT",-72.00,Groceries
+"Asda Superstore POS",-18.40,Groceries
+"M&S Food London POS",-14.20,Groceries
+"Ocado Retail Ltd DD",-102.00,Groceries
+"Co-op Food Stores",-9.40,Groceries
+"ICELAND FOODS POS",-21.00,Groceries
+"POS 4412 STARBUCKS",-4.50,"Food & Dining"
+"Costa Coffee London",-3.85,"Food & Dining"
+"Nandos Rest London",-34.00,"Food & Dining"
+"Deliveroo Food Order",-28.50,"Food & Dining"
+"Just Eat Online PMT",-15.40,"Food & Dining"
+"Wagamama POS Ref:2",-42.00,"Food & Dining"
+"Uber Eats #9921 PMT",-22.00,"Food & Dining"
+"Five Guys POS London",-16.50,"Food & Dining"
+"Pret A Manger #003",-8.40,"Food & Dining"
+"Wetherspoons POS Pub",-31.00,"Food & Dining"
+"THE IVY RESTAURANT",-145.00,"Food & Dining"
+"Local Pub Gastro POS",-38.00,"Food & Dining"
+"TFL.GOV.UK TRAVEL",-7.20,Transportation
+"UBER TRIP LONDON",-18.50,Transportation
+"TRAINLINE TICKETS #4",-42.00,Transportation
+"SHELL PETROL STATION",-55.00,Transportation
+"BP FUEL POS #882",-62.00,Transportation
+"City Taxi London POS",-15.00,Transportation
+"Bolt Ride Manchester",-11.40,Transportation
+"National Express Bus",-24.00,Transportation
+"AMZN Mktp UK4421",-22.50,"Shopping & Retail"
+"AMAZON.CO.UK ONLINE",-45.00,"Shopping & Retail"
+"ZARA ONLINE PMT #9",-72.00,"Shopping & Retail"
+"H&M STORES LONDON",-28.00,"Shopping & Retail"
+"Apple Store Ref:882",-99.00,"Shopping & Retail"
+"Currys PC World POS",-42.00,"Shopping & Retail"
+"B&Q STORES #0944",-31.00,"Shopping & Retail"
+"IKEA LIMITED PMT",-115.00,"Shopping & Retail"
+"Wayfair Online Shop",-88.00,"Shopping & Retail"
+"Argos Ltd POS Ref:Z",-22.00,"Shopping & Retail"
+"John Lewis & Partners",-45.00,"Shopping & Retail"
+"TK Maxx POS London",-34.00,"Shopping & Retail"
+"pos 4421 boots",-14.20,"Personal Care"
+"Superdrug #9912 POS",-11.50,"Personal Care"
+"BARBER SHOP #3 LONDON",-25.00,"Personal Care"
+"The Beauty Clinic Ref",-55.00,"Personal Care"
+"Sephora UK Online",-42.00,"Personal Care"
+"TONI & GUY SALONS",-85.00,"Personal Care"
+"Rush Hair POS Ref:8",-44.00,"Personal Care"
+"Kiko Milano Store POS",-12.40,"Personal Care"
+"Cult Beauty Ltd Online",-31.50,"Personal Care"
+"Space NK London POS",-52.00,"Personal Care"
+"Holland & Barrett #4",-15.00,"Personal Care"
+"The Body Shop Store",-14.00,"Personal Care"
+"Dermalogica UK PMT",-38.00,"Personal Care"
+"Specsavers Opticians",-142.00,"Healthcare & Medical"
+"NHS Dental Charges",-25.80,"Healthcare & Medical"
+"pos 9912 lloyds pharm",-9.40,"Healthcare & Medical"
+"Bupa Health Ins DD",-45.00,"Healthcare & Medical"
+"Vision Express London",-110.00,"Healthcare & Medical"
+"Boots Pharmacy POS",-18.40,"Healthcare & Medical"
+"Dr Surgery Appt Fee",-35.00,"Healthcare & Medical"
+"Spire Healthcare Pvt",-150.00,"Healthcare & Medical"
+"Pharmacy2U Online PMT",-14.50,"Healthcare & Medical"
+"BetterHelp Mental Health",-40.00,"Healthcare & Medical"
+"Dental Care Clinic POS",-62.00,"Healthcare & Medical"
+"Zelle Pmt: Alice #88",-55.00,Transfers
+"Xfer: Bob Rent Share",-400.00,Transfers
+"Monzo Pay: Sarah Lunch",-15.40,Transfers
+"Revolut *Transfer Dave",-32.00,Transfers
+"Paypal *Friend PMT ID",-22.00,Transfers
+"Bank Xfer: John Smith",-85.00,Transfers
+"Transfer to James Ref:6",-42.00,Transfers
+"Settle Up: Grocery Split",-31.50,Transfers
+"Venmo Pmt: Cinema Tick",-12.50,Transfers
+"Monzo *4412 Payment",-14.20,Transfers
+"Revolut Send ID:8812",-75.00,Transfers
+"Transfer to Mom Ref:Bday",-50.00,Transfers
+"Paypal *GIFT PMT #442",-15.00,Transfers
+"Vanguard ISA Deposit",-200.00,"Savings & Investments"
+"Nutmeg Savings DD PMT",-100.00,"Savings & Investments"
+"Trading 212 Topup",-50.00,"Savings & Investments"
+"Coinbase Crypto Buy",-100.00,"Savings & Investments"
+"Moneybox ISA DD",-40.00,"Savings & Investments"
+"Hargreaves Lansdown",-150.00,"Savings & Investments"
+"Plum Savings App Ref",-25.00,"Savings & Investments"
+"REVOLUT SAVINGS VAULT",-100.00,"Savings & Investments"
+"Pension Contribution",-250.00,"Savings & Investments"
+"NETFLIX.COM DD PMT",-10.99,Subscriptions
+"Spotify Ltd Monthly",-9.99,Subscriptions
+"Amazon Prime Member",-8.99,Subscriptions
+"Disney Plus Digital",-7.99,Subscriptions
+"YouTube Premium Google",-11.99,Subscriptions
+"Adobe Photo Plan DD",-9.98,Subscriptions
+"The Guardian Sub DD",-12.00,Subscriptions
+"Xbox Game Pass Msft",-10.99,Subscriptions
+"Apple Music Monthly",-10.99,Subscriptions
+"Odeon Cinema POS",-18.40,"Entertainment & Recreation"
+"Vue Entertainment #8",-14.20,"Entertainment & Recreation"
+"SteamGames.com Valve",-45.00,"Entertainment & Recreation"
+"PureGym Monthly DD",-24.99,"Entertainment & Recreation"
+"David Lloyd Clubs Mth",-95.00,"Entertainment & Recreation"
+"Ticketmaster Tickets",-120.00,"Entertainment & Recreation"
+"Nintendo eShop POS",-19.99,"Entertainment & Recreation"
+"Bet365 Gaming Online",-25.00,"Entertainment & Recreation"
+"The National Trust",-8.40,"Entertainment & Recreation"
+"TopGolf UK London",-28.00,"Entertainment & Recreation"
+"Atm Withdrawal #221",-60.00,"Other / Unknown"
+"Post Office Stamps",-5.20,"Other / Unknown"
+"Paypal *eBay Fees",-15.40,"Other / Unknown"
+"Transferwise Fee PMT",-8.00,"Other / Unknown"
+"Charity: Red Cross DD",-10.00,"Other / Unknown"
+"Bank Fee: Account Mth",-5.00,"Other / Unknown"
+"Foreign Exchange Fee",-3.50,"Other / Unknown"
+"IZ *Parking City POS",-12.40,"Other / Unknown"
+"SumUp Market Stall",-11.50,"Other / Unknown"
+"Zettle Coffee Cart",-4.20,"Other / Unknown"
+"Laundry Services POS",-15.00,"Other / Unknown"
+"Misc Direct Debit",-28.00,"Other / Unknown"
+"SAVINGS INTEREST EARN",2.45,Income
+"HMRC REBATE #99120",315.00,Income
+"Airbnb Host Payment",180.00,Income
+"Vanguard Dividend PMT",42.50,Income
+"Fiverr Payout Ref:44",65.00,Income
+"GOOGLE ADSENSE PMT",110.00,Income
+"Rent Skyline Apts DD",-1150.00,Housing
+"Mortgage Pmt HSBC Ltd",-980.00,Housing
+"Council Tax London DD",-145.00,"Utilities & Bills"
+"Aviva Home Ins DD",-28.50,Housing
+"POS 1120 TESCO STORE",-14.20,Groceries
+"Sainsburys Store #99",-28.50,Groceries
+"Aldi Groceries London",-42.00,Groceries
+"Lidl UK Stores #442",-35.00,Groceries
+"Waitrose Online PMT",-85.00,Groceries
+"Asda Superstore POS",-22.00,Groceries
+"M&S Food London POS",-18.50,Groceries
+"Ocado Retail Ltd DD",-95.00,Groceries
+"Co-op Food Stores POS",-11.40,Groceries
+"Iceland Foods POS #8",-18.00,Groceries
+"POS 8821 STARBUCKS",-4.20,"Food & Dining"
+"Costa Coffee London",-3.95,"Food & Dining"
+"Nandos Rest London",-32.00,"Food & Dining"
+"Deliveroo Food Order",-26.40,"Food & Dining"
+"Just Eat Online PMT",-18.50,"Food & Dining"
+"Wagamama POS Ref:3",-45.00,"Food & Dining"
+"Uber Eats #4412 PMT",-25.00,"Food & Dining"
+"Five Guys POS London",-18.40,"Food & Dining"
+"Pret A Manger #004",-9.50,"Food & Dining"
+"Wetherspoons POS Pub",-28.50,"Food & Dining"
+"The Ivy Restaurant",-120.00,"Food & Dining"
+"Local Pub Gastro POS",-42.00,"Food & Dining"
+"TFL.GOV.UK TRAVEL",-6.50,Transportation
+"UBER TRIP LONDON",-15.40,Transportation
+"TRAINLINE TICKETS #8",-55.00,Transportation
+"SHELL PETROL STATION",-65.00,Transportation
+"BP FUEL POS #442",-48.00,Transportation
+"City Taxi London POS",-18.50,Transportation
+"Bolt Ride Manchester",-12.40,Transportation
+"National Express Bus",-22.00,Transportation
+"AMZN Mktp UK8821",-18.50,"Shopping & Retail"
+"AMAZON.CO.UK ONLINE",-55.00,"Shopping & Retail"
+"ZARA ONLINE PMT #4",-85.00,"Shopping & Retail"
+"H&M STORES LONDON",-42.00,"Shopping & Retail"
+"Apple Store Ref:442",-129.00,"Shopping & Retail"
+"Currys PC World POS",-55.00,"Shopping & Retail"
+"B&Q STORES #9921",-28.40,"Shopping & Retail"
+"IKEA LIMITED PMT",-145.00,"Shopping & Retail"
+"Wayfair Online Shop",-110.00,"Shopping & Retail"
+"Argos Ltd POS Ref:Y",-32.00,"Shopping & Retail"
+"John Lewis & Partners",-72.00,"Shopping & Retail"
+"TK Maxx POS London",-45.00,"Shopping & Retail"
+"pos 8821 boots store",-15.40,"Personal Care"
+"Superdrug #4412 POS",-12.50,"Personal Care"
+"BARBER SHOP #4 LONDON",-28.00,"Personal Care"
+"The Beauty Clinic Ref",-62.00,"Personal Care"
+"Sephora UK Online",-55.00,"Personal Care"
+"TONI & GUY SALONS",-95.00,"Personal Care"
+"Rush Hair POS Ref:7",-52.00,"Personal Care"
+"Kiko Milano Store POS",-15.40,"Personal Care"
+"Cult Beauty Ltd Online",-45.00,"Personal Care"
+"Space NK London POS",-62.00,"Personal Care"
+"Holland & Barrett #8",-18.50,"Personal Care"
+"The Body Shop Store",-22.00,"Personal Care"
+"Dermalogica UK PMT",-45.00,"Personal Care"
+"Specsavers Opticians",-125.00,"Healthcare & Medical"
+"NHS Dental Charges",-25.80,"Healthcare & Medical"
+"pos 4412 lloyds pharm",-11.40,"Healthcare & Medical"
+"Bupa Health Ins DD",-45.00,"Healthcare & Medical"
+"Vision Express London",-120.00,"Healthcare & Medical"
+"Boots Pharmacy POS",-22.00,"Healthcare & Medical"
+"Dr Surgery Appt Fee",-45.00,"Healthcare & Medical"
+"Spire Healthcare Pvt",-180.00,"Healthcare & Medical"
+"Pharmacy2U Online PMT",-18.50,"Healthcare & Medical"
+"BetterHelp Mental Health",-40.00,"Healthcare & Medical"
+"Dental Care Clinic POS",-72.00,"Healthcare & Medical"
+"Zelle Pmt: Alice #44",-65.00,Transfers
+"Xfer: Bob Rent Share",-400.00,Transfers
+"Monzo Pay: Sarah Lunch",-18.40,Transfers
+"Revolut *Transfer Dave",-42.00,Transfers
+"Paypal *Friend PMT ID",-25.00,Transfers
+"Bank Xfer: John Smith",-110.00,Transfers
+"Transfer to James Ref:7",-55.00,Transfers
+"Settle Up: Grocery Split",-42.00,Transfers
+"Venmo Pmt: Cinema Tick",-15.00,Transfers
+"Monzo *8821 Payment",-18.50,Transfers
+"Revolut Send ID:4421",-100.00,Transfers
+"Transfer to Mom Ref:Bday",-75.00,Transfers
+"Paypal *GIFT PMT #992",-25.00,Transfers
+"Vanguard ISA Deposit",-200.00,"Savings & Investments"
+"Nutmeg Savings DD PMT",-100.00,"Savings & Investments"
+"Trading 212 Topup",-50.00,"Savings & Investments"
+"Coinbase Crypto Buy",-125.00,"Savings & Investments"
+"Moneybox ISA DD",-40.00,"Savings & Investments"
+"Hargreaves Lansdown",-150.00,"Savings & Investments"
+"Plum Savings App Ref",-25.00,"Savings & Investments"
+"REVOLUT SAVINGS VAULT",-150.00,"Savings & Investments"
+"Pension Contribution",-250.00,"Savings & Investments"
+"NETFLIX.COM DD PMT",-10.99,Subscriptions
+"Spotify Ltd Monthly",-9.99,Subscriptions
+"Amazon Prime Member",-8.99,Subscriptions
+"Disney Plus Digital",-7.99,Subscriptions
+"YouTube Premium Google",-11.99,Subscriptions
+"Adobe Photo Plan DD",-9.98,Subscriptions
+"The Guardian Sub DD",-12.00,Subscriptions
+"Xbox Game Pass Msft",-10.99,Subscriptions
+"Apple Music Monthly",-10.99,Subscriptions
+"Odeon Cinema POS",-22.00,"Entertainment & Recreation"
+"Vue Entertainment #4",-18.50,"Entertainment & Recreation"
+"SteamGames.com Valve",-55.00,"Entertainment & Recreation"
+"PureGym Monthly DD",-24.99,"Entertainment & Recreation"
+"David Lloyd Clubs Mth",-95.00,"Entertainment & Recreation"
+"Ticketmaster Tickets",-145.00,"Entertainment & Recreation"
+"Nintendo eShop POS",-25.00,"Entertainment & Recreation"
+"Bet365 Gaming Online",-32.00,"Entertainment & Recreation"
+"The National Trust",-11.40,"Entertainment & Recreation"
+"TopGolf UK London",-35.00,"Entertainment & Recreation"
+"Atm Withdrawal #882",-80.00,"Other / Unknown"
+"Post Office Stamps",-6.50,"Other / Unknown"
+"Paypal *eBay Fees",-18.50,"Other / Unknown"
+"Transferwise Fee PMT",-11.00,"Other / Unknown"
+"Charity: Red Cross DD",-10.00,"Other / Unknown"
+"Bank Fee: Account Mth",-5.00,"Other / Unknown"
+"Foreign Exchange Fee",-4.20,"Other / Unknown"
+"IZ *Parking City POS",-18.50,"Other / Unknown"
+"SumUp Market Stall",-14.20,"Other / Unknown"
+"Zettle Coffee Cart",-5.50,"Other / Unknown"
+"Laundry Services POS",-18.00,"Other / Unknown"
+"Misc Direct Debit",-35.00,"Other / Unknown"
+"REF: BROADBAND-PYMT-JAN",-32.50,"Utilities & Bills"
+"DD SCOTTISH POWER ELEC",-84.20,"Utilities & Bills"
+"O2 MONTHLY PLAN #8821",-42.00,"Utilities & Bills"
+"water bill - thames water",-34.10,"Utilities & Bills"
+"E.ON NEXT DD ENERGY",-105.00,"Utilities & Bills"
+"pos topup: lebara mobile",-15.00,"Utilities & Bills"
+"GiffGaff *Monthly Plan",-12.00,"Utilities & Bills"
+"Shell Energy Gas Bill",-78.40,"Utilities & Bills"
+"Plusnet Broadband REF9",-28.50,"Utilities & Bills"
+"TalkTalk Telecom DD",-31.00,"Utilities & Bills"
+"SALARY - NEXUS SOLUTIONS",3200.00,Income
+"STRIPE PAYOUT: FREELANCE",550.00,Income
+"REFUND: AMZN MKTPLACE",24.99,Income
+"CASHBACK - TOPCASHBACK",12.45,Income
+"Tax Rebate FY25 Ref:88",312.00,Income
+"ETSY PAYOUT STORES",85.20,Income
+"ZARA ONLINE REFUND ID",45.00,Income
+"Dividends - S&P 500 ETF",22.40,Income
+"INTEREST EARNED - ISA",4.15,Income
+"Reimbursement - Work Exp",65.00,Income
+"XFER TO SAVINGS - REF:EM",-250.00,"Savings & Investments"
+"STOCKS & SHARES ISA DEP",-500.00,"Savings & Investments"
+"DD NUTMEG INVESTMENTS",-150.00,"Savings & Investments"
+"MONEYBOX ROUND UPS DD",-24.50,"Savings & Investments"
+"CHIP SAVINGS AUTO-SAVE",-40.00,"Savings & Investments"
+"Vanguard LifeStrategy DD",-100.00,"Savings & Investments"
+"crypto.com purchase - BTC",-100.00,"Savings & Investments"
+"AJ Bell Invest Monthly",-75.00,"Savings & Investments"
+"Wealthify - Monthly Save",-50.00,"Savings & Investments"
+"XFER: EMERGENCY FUND",-200.00,"Savings & Investments"
+"TESCO SUPERSTORE GROCERY",-48.20,Groceries
+"POS 8821 LIDL STORES",-32.40,Groceries
+"ALDI STORES LTD GROCERY",-18.50,Groceries
+"Sainsburys Local #991",-14.20,Groceries
+"M&S FOOD - GROCERIES",-25.00,Groceries
+"STARBUCKS COFFEE POS",-4.50,"Food & Dining"
+"DELIVEROO *KFC ORDER",-22.10,"Food & Dining"
+"LOCAL PUB - DINNER POS",-38.00,"Food & Dining"
+"Costa Coffee - Ref:X",-3.95,"Food & Dining"
+"Wagamama - Food & Dining",-44.00,"Food & Dining"
+"Transfer to Sarah - Bill",-15.40,Transfers
+"Monzo Pay: House Split",-250.00,Transfers
+"Revolut *9921 Friend Pay",-12.00,Transfers
+"Settle Up: Grocery Split",-32.10,Transfers
+"PAYPAL *FRIEND PMT ID",-25.00,Transfers
+"Xfer to Mom - Birthday",-50.00,Transfers
+"Monzo *4412 Splitwise",-18.40,Transfers
+"Transfer to Dave Rent Share",-400.00,Transfers
+"Paypal *Gift ID:992",-20.00,Transfers
+"Dividing Bill: Pizza",-12.50,Transfers
