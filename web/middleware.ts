@@ -20,5 +20,13 @@ export default withAuth(
 
 // Protect these routes - redirect to /login if not authenticated
 export const config = {
-  matcher: ["/upload/:path*", "/dashboard", "/reports"],
+  matcher: [
+    "/dashboard",
+    "/upload/:path*",
+    "/insights",
+    "/forecast",
+    "/patterns",
+    "/reports",
+    "/settings",
+  ],
 };
