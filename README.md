@@ -1,4 +1,4 @@
-# AI-Driven Budgeting and Expense Tracking App
+# SpendSight: AI-Driven Budgeting and Expense Tracking App
 
 A final year project web application that helps users upload and analyse personal financial transactions. The system allows users to import bank transaction data, categorise spending, and view summaries through a dashboard. It combines a full-stack web application with a machine learning microservice for transaction categorisation.
 
