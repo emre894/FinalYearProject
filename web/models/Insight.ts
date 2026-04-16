@@ -1,27 +1,20 @@
 import mongoose, { Schema, models, model } from "mongoose";
 
-// Two types of insight the system can store:
-// "qa"          — a user asked a question and got an AI answer
-// "action_plan" — the user generated their personal action plan
 export type InsightType = "qa" | "action_plan";
-
-// The financial situation at the time the action plan was generated.
-// Matches the three states computed in the advice route.
 export type FinancialSituation = "deficit" | "cautious" | "healthy";
 
 export interface InsightDoc {
   userId: string;
-
   type: InsightType;
 
-  // ── Q&A fields (used when type === "qa") ──────────────────────────────
-  question?: string;  // the question the user clicked
-  answer?: string;    // the AI-generated paragraph response
+  // Used for question/answer insights
+  question?: string;
+  answer?: string;
 
-  // ── Action plan fields (used when type === "action_plan") ─────────────
-  summary?: string;           // one-sentence situation summary
-  steps?: string[];           // array of numbered step texts
-  situation?: FinancialSituation; // which financial state triggered this plan
+  // Used for action plans
+  summary?: string;
+  steps?: string[];
+  situation?: FinancialSituation;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -32,16 +25,13 @@ const InsightSchema = new Schema<InsightDoc>(
     userId: {
       type: String,
       required: true,
-      index: true, // indexed so we can quickly fetch all insights for a user
+      index: true,
     },
-
     type: {
       type: String,
       enum: ["qa", "action_plan"],
       required: true,
     },
-
-    // Q&A fields — optional because action_plan rows won't have them
     question: {
       type: String,
       required: false,
@@ -51,16 +41,14 @@ const InsightSchema = new Schema<InsightDoc>(
       type: String,
       required: false,
     },
-
-    // Action plan fields — optional because qa rows won't have them
     summary: {
       type: String,
       required: false,
     },
     steps: {
-      type: [String], // array of strings, one per action step
+      type: [String],
       required: false,
-      default: undefined, // don't default to [] on qa rows
+      default: undefined,
     },
     situation: {
       type: String,
@@ -69,10 +57,10 @@ const InsightSchema = new Schema<InsightDoc>(
     },
   },
   {
-    timestamps: true, // auto-adds createdAt and updatedAt, same as Transaction and User
+    timestamps: true,
   }
 );
 
-// Prevent model overwrite on Next.js hot reload — same pattern as all other models
+// Reuse the model during hot reload in development
 export const Insight =
   models.Insight || model<InsightDoc>("Insight", InsightSchema);

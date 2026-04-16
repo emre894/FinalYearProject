@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { useEffect, useState } from "react";
 
 interface CategoryBreakdownItem {
   name: string;
@@ -36,7 +34,6 @@ interface ActionStep {
   text: string;
 }
 
-// ─── Question buttons ─────────────────────────────────────────────────────────
 const QUESTIONS = [
   {
     label: "Why did my spending change?",
@@ -70,8 +67,7 @@ const QUESTIONS = [
   },
 ];
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
+// Format money values
 const fmt = (n: number) => `£${Math.abs(n).toFixed(2)}`;
 
 const changeColour = (change: number | null) => {
@@ -91,22 +87,22 @@ const categoryColour = (name: string): string => {
     "#14b8a6",
     "#eab308",
   ];
+
   return colours[name.charCodeAt(0) % colours.length];
 };
 
+// Turn numbered AI output into step objects
 const parseSteps = (text: string): ActionStep[] => {
   const lines = text
     .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => /^\d+\./.test(l));
+    .map((line) => line.trim())
+    .filter((line) => /^\d+\./.test(line));
 
-  return lines.map((line, i) => ({
-    step: i + 1,
+  return lines.map((line, index) => ({
+    step: index + 1,
     text: line.replace(/^\d+\.\s*/, ""),
   }));
 };
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function InsightsClient() {
   const [facts, setFacts] = useState<Facts | null>(null);
@@ -123,6 +119,7 @@ export default function InsightsClient() {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState("");
 
+  // Load the financial facts first
   useEffect(() => {
     const fetchFacts = async () => {
       try {
@@ -149,6 +146,7 @@ export default function InsightsClient() {
 
   const handleGenerateActionPlan = async () => {
     if (actionLoading) return;
+
     setActionSteps([]);
     setActionSummary("");
     setActionError("");
@@ -206,8 +204,6 @@ export default function InsightsClient() {
     }
   };
 
-  // ─── Render ──────────────────────────────────────────────────────────────────
-
   if (factsLoading) {
     return (
       <p className="text-gray-500 text-sm mt-8">
@@ -228,7 +224,7 @@ export default function InsightsClient() {
 
   return (
     <div>
-      {/* ── Page header ── */}
+      {/* Page header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Insights</h1>
         <p className="text-gray-500 text-sm max-w-2xl">
@@ -238,13 +234,13 @@ export default function InsightsClient() {
         </p>
       </div>
 
-      {/* ── 1. Financial Summary cards ── */}
+      {/* Summary cards */}
       <section className="mb-10">
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Your Financial Summary
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div
             className={`border rounded-lg p-4 ${
               facts.netBalance >= 0
@@ -275,8 +271,8 @@ export default function InsightsClient() {
               {facts.topCategory}
             </p>
             <p className="text-xs text-gray-500 mt-1">
-              {fmt(facts.topCategoryAmount)} —{" "}
-              {facts.topCategoryPercent}% of all spending
+              {fmt(facts.topCategoryAmount)} — {facts.topCategoryPercent}% of all
+              spending
             </p>
           </div>
 
@@ -353,7 +349,7 @@ export default function InsightsClient() {
         </div>
       </section>
 
-      {/* ── 2. Ask the AI Assistant ── */}
+      {/* Ask the AI */}
       <section className="mb-10">
         <h2 className="text-lg font-semibold text-gray-800 mb-1">
           Ask the AI Assistant
@@ -369,7 +365,7 @@ export default function InsightsClient() {
               key={label}
               onClick={() => handleQuestion(label, question)}
               disabled={aiLoading}
-              className={`cursor-pointer text-left px-4 py-3 rounded-lg border text-sm font-medium transition-colors
+              className={`text-left px-4 py-3 rounded-lg border text-sm font-medium transition-colors
                 ${
                   activeQuestion === label
                     ? "bg-indigo-600 text-white border-indigo-600"
@@ -389,6 +385,7 @@ export default function InsightsClient() {
               <p className="text-xs font-semibold text-indigo-500 uppercase">
                 AI Response — {activeQuestion}
               </p>
+
               {!aiLoading && aiAnswer && (
                 <button
                   onClick={() => {
@@ -407,7 +404,9 @@ export default function InsightsClient() {
                 Generating insight, please wait...
               </p>
             )}
+
             {aiError && <p className="text-sm text-red-600">{aiError}</p>}
+
             {!aiLoading && aiAnswer && (
               <p className="text-sm text-gray-800 leading-relaxed">{aiAnswer}</p>
             )}
@@ -421,7 +420,7 @@ export default function InsightsClient() {
         )}
       </section>
 
-      {/* ── 3. Personal Action Plan ── */}
+      {/* Action plan */}
       <section className="mb-10">
         <div className="flex items-center gap-2 mb-1">
           <h2 className="text-lg font-semibold text-gray-800">
@@ -431,6 +430,7 @@ export default function InsightsClient() {
             AI Generated
           </span>
         </div>
+
         <p className="text-sm text-gray-500 mb-4">
           Click the button below to generate a personalised financial action
           plan based on your transaction data.
@@ -461,7 +461,6 @@ export default function InsightsClient() {
 
         {!actionLoading && actionSummary && (
           <div className="bg-white border border-gray-200 rounded-lg p-6">
-            {/* Summary pill */}
             <div className="flex items-start gap-3 mb-5 p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
               <span className="text-indigo-500 mt-0.5">✦</span>
               <p className="text-sm font-medium text-indigo-800 leading-relaxed">
@@ -469,24 +468,22 @@ export default function InsightsClient() {
               </p>
             </div>
 
-            {/* Step cards */}
             <div className="space-y-3">
-              {actionSteps.map((s) => (
+              {actionSteps.map((stepItem) => (
                 <div
-                  key={s.step}
+                  key={stepItem.step}
                   className="flex items-start gap-4 rounded-lg p-4 border border-gray-100 bg-gray-50"
                 >
                   <div className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-sm font-bold flex items-center justify-center">
-                    {s.step}
+                    {stepItem.step}
                   </div>
                   <p className="text-sm text-gray-700 leading-relaxed">
-                    {s.text}
+                    {stepItem.text}
                   </p>
                 </div>
               ))}
             </div>
 
-            {/* Footer */}
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
               <p className="text-xs text-gray-400">
                 AI-generated advice based on your transaction data. Not
@@ -503,25 +500,27 @@ export default function InsightsClient() {
         )}
       </section>
 
-      {/* ── 4. Spending by Category ── */}
+      {/* Category breakdown */}
       <section>
         <h2 className="text-lg font-semibold text-gray-800 mb-4">
           Spending by Category
         </h2>
+
         <div className="border border-gray-200 rounded-lg overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                {["Category", "Amount", "Share", "Visual"].map((h) => (
+                {["Category", "Amount", "Share", "Visual"].map((heading) => (
                   <th
-                    key={h}
+                    key={heading}
                     className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase"
                   >
-                    {h}
+                    {heading}
                   </th>
                 ))}
               </tr>
             </thead>
+
             <tbody className="bg-white divide-y divide-gray-200">
               {facts.categoryBreakdown.map((cat) => (
                 <tr key={cat.name}>

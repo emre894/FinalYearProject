@@ -7,35 +7,35 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// ─── Helper: group transactions by month ─────────────────────────────────────
-// Takes all transactions and returns an object like:
-// { "2026-01": 450.20, "2026-02": 380.00 }
+// Group expense totals by month
 function groupByMonth(transactions: any[]): Record<string, number> {
   const result: Record<string, number> = {};
+
   for (const tx of transactions) {
-    if (tx.amount >= 0) continue; // skip income
+    if (tx.amount >= 0) continue;
+
     const month = new Date(tx.date).toISOString().slice(0, 7);
     result[month] = (result[month] ?? 0) + Math.abs(tx.amount);
   }
+
   return result;
 }
 
-// ─── Helper: group transactions by category ───────────────────────────────────
-// Returns an object like: { "Groceries": 234.50, "Transport": 45.00 }
+// Group expense totals by category
 function groupByCategory(transactions: any[]): Record<string, number> {
   const result: Record<string, number> = {};
+
   for (const tx of transactions) {
-    if (tx.amount >= 0) continue; // skip income
+    if (tx.amount >= 0) continue;
+
     const cat = tx.category ?? "Unknown";
     result[cat] = (result[cat] ?? 0) + Math.abs(tx.amount);
   }
+
   return result;
 }
 
-// ─── Helper: compute all deterministic facts ──────────────────────────────────
-// This is the core of the insights system. It takes all transactions and
-// returns a structured object of facts that both the frontend cards and
-// the OpenAI prompt will use.
+// Build the facts used by the cards and AI prompt
 function computeFacts(transactions: any[]) {
   const expenses = transactions.filter((tx) => tx.amount < 0);
   const income = transactions.filter((tx) => tx.amount >= 0);
@@ -44,36 +44,35 @@ function computeFacts(transactions: any[]) {
   const totalIncome = income.reduce((sum, tx) => sum + tx.amount, 0);
   const netBalance = totalIncome - totalSpent;
 
-  // Category breakdown
   const byCategory = groupByCategory(transactions);
   const categoryEntries = Object.entries(byCategory).sort((a, b) => b[1] - a[1]);
   const topCategory = categoryEntries[0] ?? ["None", 0];
   const categoryCount = categoryEntries.length;
 
-  // Monthly breakdown
   const byMonth = groupByMonth(transactions);
   const sortedMonths = Object.keys(byMonth).sort();
   const monthCount = sortedMonths.length;
 
-  // Month-on-month change (only meaningful if we have at least 2 months)
+  // Work out the change between the latest two months
   let monthOnMonthChange: number | null = null;
   let lastMonth = "";
   let previousMonth = "";
+
   if (sortedMonths.length >= 2) {
     lastMonth = sortedMonths[sortedMonths.length - 1];
     previousMonth = sortedMonths[sortedMonths.length - 2];
+
     const last = byMonth[lastMonth];
     const prev = byMonth[previousMonth];
     monthOnMonthChange = Math.round(((last - prev) / prev) * 100);
   }
 
-  // Biggest single expense
   const biggestExpense = expenses.reduce(
     (max, tx) => (Math.abs(tx.amount) > Math.abs(max.amount) ? tx : max),
     expenses[0] ?? null
   );
 
-  // Spending spike: any transaction more than 2x the average expense
+  // A spike is any expense above 2x the average expense
   const avgExpense = totalSpent / (expenses.length || 1);
   const spikes = expenses.filter((tx) => Math.abs(tx.amount) > avgExpense * 2);
 
@@ -105,11 +104,10 @@ function computeFacts(transactions: any[]) {
   };
 }
 
-// ─── GET — return deterministic facts only ────────────────────────────────────
-// Called when the page loads. No OpenAI involved.
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -128,21 +126,23 @@ export async function GET(request: Request) {
     const facts = computeFacts(transactions);
     return Response.json({ ok: true, facts });
   } catch (err: any) {
-    return Response.json({ ok: false, message: err?.message ?? "Unknown error" }, { status: 500 });
+    return Response.json(
+      { ok: false, message: err?.message ?? "Unknown error" },
+      { status: 500 }
+    );
   }
 }
 
-// ─── POST — generate an AI insight for a specific question ───────────────────
-// Called when the user clicks a question button.
-// Body: { question: string }
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
 
     const { question } = await request.json();
+
     if (!question) {
       return Response.json({ ok: false, message: "No question provided" }, { status: 400 });
     }
@@ -160,8 +160,7 @@ export async function POST(request: Request) {
 
     const facts = computeFacts(transactions);
 
-    // Build the prompt — I give OpenAI the facts as context, then ask the question.
-    // I tell it to only use the numbers we provide, not invent anything.
+    // Send the real numbers to OpenAI and answer the selected question
     const prompt = `
 You are a helpful financial assistant analysing a user's personal spending data.
 Use ONLY the facts below to answer the question. Do not invent numbers or assumptions.
@@ -192,9 +191,7 @@ QUESTION: ${question}
 
     const answer = completion.choices[0]?.message?.content ?? "Could not generate insight.";
 
-    // Save this Q&A insight to the database so the user can see their history
-    // We don't await this — if it fails, the user still gets their answer
-    // This is called "fire and forget" — non-critical side effect
+    // Save the Q&A in the background
     Insight.create({
       userId: session.user.id,
       type: "qa",
@@ -204,6 +201,9 @@ QUESTION: ${question}
 
     return Response.json({ ok: true, question, answer });
   } catch (err: any) {
-    return Response.json({ ok: false, message: err?.message ?? "Unknown error" }, { status: 500 });
+    return Response.json(
+      { ok: false, message: err?.message ?? "Unknown error" },
+      { status: 500 }
+    );
   }
 }

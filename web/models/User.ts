@@ -1,7 +1,7 @@
 // web/models/User.ts
 import mongoose, { Schema, Model } from "mongoose";
 
-// Define the User interface (minimal TypeScript)
+// Define the User interface
 interface IUser {
   email: string;
   passwordHash: string;
@@ -34,8 +34,7 @@ const userSchema = new Schema<IUser>(
   }
 );
 
-// Prevent model overwrite on hot reload (Next.js development)
-// If the model already exists, use it; otherwise create a new one
+// Reuse the model during hot reload in development
 const User: Model<IUser> =
   mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 

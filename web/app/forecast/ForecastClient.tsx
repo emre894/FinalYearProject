@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import ForecastChart from "./ForecastChart";
 
 interface ForecastResult {
@@ -19,34 +19,42 @@ interface ChartPoint {
   connector: number | null;
 }
 
+// Format money values
 const fmt = (n: number) => `£${Math.abs(n).toFixed(2)}`;
 
+// Convert YYYY-MM into a short month label
 const shortMonth = (ym: string): string => {
   const [year, month] = ym.split("-");
   const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+
   return date.toLocaleDateString("en-GB", {
     month: "short",
     year: "2-digit",
   });
 };
 
+// Convert YYYY-MM into a full month label
 const longMonth = (ym: string): string => {
   const [year, month] = ym.split("-");
   const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+
   return date.toLocaleDateString("en-GB", {
     month: "long",
     year: "numeric",
   });
 };
 
+// Get the month after the last historical month
 const getNextMonth = (lastMonth: string): string => {
   const [year, month] = lastMonth.split("-").map(Number);
   const next = new Date(year, month, 1);
   const y = next.getFullYear();
   const m = String(next.getMonth() + 1).padStart(2, "0");
+
   return `${y}-${m}`;
 };
 
+// Build the chart points for the historical months and forecast month
 const buildChartData = (result: ForecastResult): ChartPoint[] => {
   const historical: ChartPoint[] = result.months.map((month, index) => ({
     name: shortMonth(month),
@@ -79,16 +87,18 @@ export default function ForecastClient() {
   const [forecastLoading, setForecastLoading] = useState(false);
   const [forecastError, setForecastError] = useState("");
 
+  // Load categories for the dropdown
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const res = await fetch("/api/analytics/categories");
         const data = await res.json();
+
         if (data.ok) {
           setCategories(data.categories);
         }
       } catch {
-        // Keep dropdown usable even if categories fail to load
+        // Leave the dropdown usable even if categories fail
       } finally {
         setCategoriesLoading(false);
       }
@@ -97,6 +107,7 @@ export default function ForecastClient() {
     fetchCategories();
   }, []);
 
+  // Load forecast for the selected category
   useEffect(() => {
     const fetchForecast = async () => {
       setForecastLoading(true);

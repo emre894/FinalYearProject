@@ -5,16 +5,17 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 const ML_API_URL = process.env.ML_API_URL ?? "http://localhost:8000";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
 
     await connectMongo();
 
-    // Fetch all transactions for pattern detection (expenses only, up to 500)
+    // Get expense transactions for pattern detection
     const transactions = await Transaction.find({
       userId: session.user.id,
       amount: { $lt: 0 },
@@ -31,15 +32,14 @@ export async function GET(request: Request) {
       });
     }
 
-    // Shape the data exactly as FastAPI /patterns expects
+    // Match the format expected by the FastAPI route
     const payload = transactions.map((tx) => ({
       amount: tx.amount,
-      date: tx.date.toISOString().slice(0, 10), // "YYYY-MM-DD"
+      date: tx.date.toISOString().slice(0, 10),
       description: tx.description,
       category: tx.category ?? "Unknown",
     }));
 
-    // Call FastAPI
     const mlResponse = await fetch(`${ML_API_URL}/patterns`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,6 +58,9 @@ export async function GET(request: Request) {
       message: mlData.message,
     });
   } catch (err: any) {
-    return Response.json({ ok: false, message: err?.message ?? "Unknown error" }, { status: 500 });
+    return Response.json(
+      { ok: false, message: err?.message ?? "Unknown error" },
+      { status: 500 }
+    );
   }
 }

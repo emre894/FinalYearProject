@@ -3,9 +3,10 @@ import { Transaction } from "@/models/Transaction";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -17,9 +18,9 @@ export async function GET(request: Request) {
       userId: session.user.id,
     });
 
-    // Convert each date into a "YYYY-MM" string and remove duplicates
-    // e.g. 2026-01-15 becomes "2026-01"
+    // Convert dates into YYYY-MM values
     const monthSet = new Set<string>();
+
     for (const date of dates) {
       const d = new Date(date);
       const year = d.getFullYear();
@@ -27,7 +28,6 @@ export async function GET(request: Request) {
       monthSet.add(`${year}-${month}`);
     }
 
-    // Sort most recent first
     const months = Array.from(monthSet).sort().reverse();
 
     return Response.json({ ok: true, months });

@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { useEffect, useState } from "react";
 
 interface UserInfo {
   id: string;
@@ -11,13 +9,10 @@ interface UserInfo {
   createdAt: string;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-// Converts a MongoDB ObjectId string to a short 8-character account reference
-// e.g. "6627a3f2e1b4c2d9f0a12345" becomes "#f0a12345"
+// Show a shorter version of the MongoDB user id
 const shortId = (id: string): string => `#${id.slice(-8)}`;
 
-// Formats a date string into "15 January 2026"
+// Format the account creation date nicely for the UI
 const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString("en-GB", {
     day: "numeric",
@@ -26,14 +21,12 @@ const formatDate = (dateString: string): string => {
   });
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function SettingsClient() {
-  // User info loaded on mount
+  // Logged-in user info
   const [user, setUser] = useState<UserInfo | null>(null);
   const [userLoading, setUserLoading] = useState(true);
 
-  // Name form state
+  // Display name form state
   const [newName, setNewName] = useState("");
   const [nameMessage, setNameMessage] = useState("");
   const [nameError, setNameError] = useState("");
@@ -47,23 +40,24 @@ export default function SettingsClient() {
   const [passwordError, setPasswordError] = useState("");
   const [passwordSaving, setPasswordSaving] = useState(false);
 
-  // Danger zone state
+  // Delete transactions state
   const [transactionCount, setTransactionCount] = useState<number | null>(null);
-  const [deleteStep, setDeleteStep] = useState(0); // 0 = idle, 1 = confirm shown, 2 = deleting
+  const [deleteStep, setDeleteStep] = useState(0); // 0 = idle, 1 = confirm, 2 = deleting
   const [deleteMessage, setDeleteMessage] = useState("");
 
-  // Load user info and transaction count on mount
+  // Load user details and current transaction count when the page opens
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await fetch("/api/user/settings");
         const data = await res.json();
+
         if (data.ok) {
           setUser(data.user);
           setNewName(data.user.name);
         }
       } catch {
-        // fail silently — page still usable
+        // Leave the page usable even if this request fails
       } finally {
         setUserLoading(false);
       }
@@ -73,9 +67,12 @@ export default function SettingsClient() {
       try {
         const res = await fetch("/api/transactions?limit=500");
         const data = await res.json();
-        if (data.ok) setTransactionCount(data.count);
+
+        if (data.ok) {
+          setTransactionCount(data.count);
+        }
       } catch {
-        // fail silently
+        // Transaction count is helpful, but not essential
       }
     };
 
@@ -83,7 +80,7 @@ export default function SettingsClient() {
     fetchCount();
   }, []);
 
-  // ── Handle name update ────────────────────────────────────────────────────────
+  // Send the updated display name to the settings API
   const handleNameSave = async () => {
     setNameMessage("");
     setNameError("");
@@ -95,10 +92,13 @@ export default function SettingsClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "name", name: newName }),
       });
+
       const data = await res.json();
 
       if (data.ok) {
         setNameMessage("Name updated successfully.");
+
+        // Update the local user state so the UI changes immediately
         setUser((prev) => (prev ? { ...prev, name: newName } : prev));
       } else {
         setNameError(data.message ?? "Could not update name.");
@@ -110,17 +110,18 @@ export default function SettingsClient() {
     }
   };
 
-  // ── Handle password change ────────────────────────────────────────────────────
+  // Change the user's password after basic client-side checks
   const handlePasswordSave = async () => {
     setPasswordMessage("");
     setPasswordError("");
 
-    // Client-side check before sending to server
+    // Check the new password matches before sending to the backend
     if (newPassword !== confirmPassword) {
       setPasswordError("New passwords do not match.");
       return;
     }
 
+    // Keep password rules consistent with the backend
     if (newPassword.length < 6) {
       setPasswordError("New password must be at least 6 characters.");
       return;
@@ -134,10 +135,13 @@ export default function SettingsClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "password", currentPassword, newPassword }),
       });
+
       const data = await res.json();
 
       if (data.ok) {
         setPasswordMessage("Password updated successfully.");
+
+        // Clear the form after a successful password change
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
@@ -151,7 +155,7 @@ export default function SettingsClient() {
     }
   };
 
-  // ── Handle delete all transactions ────────────────────────────────────────────
+  // Delete all stored transactions for the current user
   const handleDelete = async () => {
     setDeleteStep(2);
     setDeleteMessage("");
@@ -174,11 +178,9 @@ export default function SettingsClient() {
     }
   };
 
-  // ─── Render ──────────────────────────────────────────────────────────────────
-
   return (
     <div className="max-w-2xl">
-      {/* Page header */}
+      {/* Page heading */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
         <p className="text-gray-500 text-sm">
@@ -186,7 +188,7 @@ export default function SettingsClient() {
         </p>
       </div>
 
-      {/* ── Account Information ── */}
+      {/* Show basic account information */}
       <section className="mb-8 p-6 bg-gray-50 border border-gray-200 rounded-xl">
         <h2 className="text-base font-semibold text-gray-800 mb-4">
           Account Information
@@ -202,14 +204,17 @@ export default function SettingsClient() {
                 {user.name || "Not set"}
               </span>
             </div>
+
             <div className="flex justify-between">
               <span className="text-gray-500">Email</span>
               <span className="font-medium text-gray-800">{user.email}</span>
             </div>
+
             <div className="flex justify-between">
               <span className="text-gray-500">Account ID</span>
               <span className="font-mono text-gray-600">{shortId(user.id)}</span>
             </div>
+
             <div className="flex justify-between">
               <span className="text-gray-500">Member since</span>
               <span className="font-medium text-gray-800">
@@ -222,7 +227,7 @@ export default function SettingsClient() {
         )}
       </section>
 
-      {/* ── Edit Display Name ── */}
+      {/* Update display name */}
       <section className="mb-8 p-6 bg-white border border-gray-200 rounded-xl">
         <h2 className="text-base font-semibold text-gray-800 mb-1">
           Display Name
@@ -242,6 +247,7 @@ export default function SettingsClient() {
         {nameMessage && (
           <p className="text-sm text-green-600 mb-2">{nameMessage}</p>
         )}
+
         {nameError && (
           <p className="text-sm text-red-600 mb-2">{nameError}</p>
         )}
@@ -255,14 +261,13 @@ export default function SettingsClient() {
         </button>
       </section>
 
-      {/* ── Change Password ── */}
+      {/* Change password */}
       <section className="mb-8 p-6 bg-white border border-gray-200 rounded-xl">
         <h2 className="text-base font-semibold text-gray-800 mb-1">
           Change Password
         </h2>
         <p className="text-xs text-gray-500 mb-4">
-          Enter your current password to confirm your identity before setting a
-          new one.
+          Enter your current password before setting a new one.
         </p>
 
         <div className="space-y-3 mb-3">
@@ -292,6 +297,7 @@ export default function SettingsClient() {
         {passwordMessage && (
           <p className="text-sm text-green-600 mb-2">{passwordMessage}</p>
         )}
+
         {passwordError && (
           <p className="text-sm text-red-600 mb-2">{passwordError}</p>
         )}
@@ -305,7 +311,7 @@ export default function SettingsClient() {
         </button>
       </section>
 
-      {/* ── Danger Zone ── */}
+      {/* Delete all transaction data */}
       <section className="p-6 bg-white border border-red-200 rounded-xl">
         <h2 className="text-base font-semibold text-red-700 mb-1">
           Danger Zone
@@ -315,7 +321,7 @@ export default function SettingsClient() {
           will remain active.
         </p>
 
-        {/* Transaction count */}
+        {/* Show how many transactions are currently stored */}
         {transactionCount !== null && (
           <p className="text-sm text-gray-600 mb-4">
             You currently have{" "}
@@ -326,7 +332,7 @@ export default function SettingsClient() {
           </p>
         )}
 
-        {/* Step 0 — initial button */}
+        {/* Step 0: show the first delete button */}
         {deleteStep === 0 && (
           <button
             onClick={() => setDeleteStep(1)}
@@ -337,12 +343,13 @@ export default function SettingsClient() {
           </button>
         )}
 
-        {/* Step 1 — confirmation */}
+        {/* Step 1: ask for confirmation */}
         {deleteStep === 1 && (
           <div className="space-y-3">
             <p className="text-sm text-red-600 font-medium">
               Are you sure? This cannot be undone.
             </p>
+
             <div className="flex gap-3">
               <button
                 onClick={handleDelete}
@@ -360,12 +367,12 @@ export default function SettingsClient() {
           </div>
         )}
 
-        {/* Step 2 — deleting in progress */}
+        {/* Step 2: deletion request is in progress */}
         {deleteStep === 2 && (
           <p className="text-sm text-gray-500">Deleting transactions...</p>
         )}
 
-        {/* Result message */}
+        {/* Show the final result message */}
         {deleteMessage && (
           <p className="text-sm text-gray-600 mt-3">{deleteMessage}</p>
         )}

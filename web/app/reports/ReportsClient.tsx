@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
+import { useEffect, useState } from "react";
 
 interface Transaction {
   _id: string;
@@ -19,37 +17,42 @@ interface CategoryRow {
   percent: number;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
+// Format money values
 const fmt = (n: number) => `£${Math.abs(n).toFixed(2)}`;
 
-// Converts "2026-01" into "January 2026" for display
+// Convert YYYY-MM into a readable month label
 const formatMonth = (ym: string): string => {
   const [year, month] = ym.split("-");
   const date = new Date(parseInt(year), parseInt(month) - 1, 1);
-  return date.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+
+  return date.toLocaleDateString("en-GB", {
+    month: "long",
+    year: "numeric",
+  });
 };
 
-// Formats a date string into "YYYY-MM-DD" for the CSV
+// Format dates for the exported CSV file
 const formatDate = (dateString: string): string => {
   const d = new Date(dateString);
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
+
   return `${y}-${m}-${day}`;
 };
 
-// Escapes a single CSV field value
-// If the value contains a comma or quote, wrap it in double quotes
+// Escape CSV values that contain commas, quotes, or new lines
 const escapeCSV = (value: string | number): string => {
   const str = String(value);
+
   if (str.includes(",") || str.includes('"') || str.includes("\n")) {
     return `"${str.replace(/"/g, '""')}"`;
   }
+
   return str;
 };
 
-// Builds a CSV string from the transactions array and triggers a download
+// Build the CSV file and trigger a download in the browser
 const downloadCSV = (transactions: Transaction[], month: string) => {
   const header = ["Date", "Description", "Amount", "Category", "Source"];
 
@@ -61,27 +64,29 @@ const downloadCSV = (transactions: Transaction[], month: string) => {
     escapeCSV(tx.source),
   ]);
 
-  // Join header and rows into a single CSV string
-  const csv = [header.join(","), ...rows.map((r) => r.join(","))].join("\n");
+  const csv = [header.join(","), ...rows.map((row) => row.join(","))].join("\n");
 
-  // Create a temporary link, set the CSV as the href, click it, remove it
   const blob = new Blob([csv], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
+
   link.href = url;
   link.download = `monthly-report-${month}.csv`;
+
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+
   URL.revokeObjectURL(url);
 };
 
-// Computes category breakdown from expense transactions only
+// Build a category summary using expense transactions only
 const getCategoryBreakdown = (transactions: Transaction[]): CategoryRow[] => {
   const expenses = transactions.filter((tx) => tx.amount < 0);
   const totalSpent = expenses.reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
 
   const byCategory: Record<string, number> = {};
+
   for (const tx of expenses) {
     const cat = tx.category || "Unknown";
     byCategory[cat] = (byCategory[cat] ?? 0) + Math.abs(tx.amount);
@@ -96,8 +101,6 @@ const getCategoryBreakdown = (transactions: Transaction[]): CategoryRow[] => {
     }));
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function ReportsClient() {
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);
   const [selectedMonth, setSelectedMonth] = useState("");
@@ -106,7 +109,7 @@ export default function ReportsClient() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Load available months once on mount
+  // Load the months that exist in the user's data
   useEffect(() => {
     const fetchMonths = async () => {
       try {
@@ -115,7 +118,8 @@ export default function ReportsClient() {
 
         if (data.ok && data.months.length > 0) {
           setAvailableMonths(data.months);
-          // Auto-select the most recent month
+
+          // Select the most recent month by default
           setSelectedMonth(data.months[0]);
         }
       } catch {
@@ -128,7 +132,7 @@ export default function ReportsClient() {
     fetchMonths();
   }, []);
 
-  // Fetch transactions whenever selected month changes
+  // Load that month's transactions whenever the month changes
   useEffect(() => {
     if (!selectedMonth) return;
 
@@ -159,7 +163,7 @@ export default function ReportsClient() {
     fetchTransactions();
   }, [selectedMonth]);
 
-  // Compute summary values from the loaded transactions
+  // Work out the summary values for the selected month
   const income = transactions
     .filter((tx) => tx.amount > 0)
     .reduce((sum, tx) => sum + tx.amount, 0);
@@ -171,8 +175,6 @@ export default function ReportsClient() {
   const net = income - spent;
   const categoryBreakdown = getCategoryBreakdown(transactions);
 
-  // ─── Render ──────────────────────────────────────────────────────────────────
-
   return (
     <div>
       {/* Page header */}
@@ -182,11 +184,11 @@ export default function ReportsClient() {
         </h1>
         <p className="text-gray-500 text-sm max-w-2xl">
           Select a month to view a summary of your transactions. You can also
-          download a CSV file of that month's transactions.
+          download a CSV file of that month&apos;s transactions.
         </p>
       </div>
 
-      {/* Empty state — no months available */}
+      {/* Show this if the user has no months at all */}
       {!monthsLoading && availableMonths.length === 0 && (
         <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-600 text-sm">
           No transaction data found. Upload some transactions to get started.
@@ -202,11 +204,12 @@ export default function ReportsClient() {
           >
             Select Month
           </label>
+
           <select
             id="month-select"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(e.target.value)}
-            className="w-full md:w-80 px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 transition-colors"
+            className="w-full appearance-none rounded-lg border border-gray-200 bg-white px-4 py-3 pr-10 text-sm text-gray-700 shadow-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-"
           >
             {availableMonths.map((month) => (
               <option key={month} value={month}>
@@ -214,22 +217,37 @@ export default function ReportsClient() {
               </option>
             ))}
           </select>
+
+          {/* Custom dropdown arrow */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
         </section>
       )}
 
-      {/* Loading */}
+      {/* Loading state */}
       {loading && (
         <p className="text-sm text-gray-500">Loading transactions...</p>
       )}
 
-      {/* Error */}
+      {/* Error state */}
       {!loading && error && (
         <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-600 text-sm">
           {error}
         </div>
       )}
 
-      {/* Results */}
+      {/* Main report view */}
       {!loading && !error && transactions.length > 0 && (
         <>
           {/* Summary cards */}
@@ -237,6 +255,7 @@ export default function ReportsClient() {
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               {formatMonth(selectedMonth)} Summary
             </h2>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-xs text-gray-500 uppercase mb-1">
@@ -284,26 +303,28 @@ export default function ReportsClient() {
             </div>
           </section>
 
-          {/* Category breakdown — expenses only */}
+          {/* Expense breakdown by category */}
           {categoryBreakdown.length > 0 && (
             <section className="mb-8">
               <h2 className="text-lg font-semibold text-gray-800 mb-4">
                 Spending by Category
               </h2>
+
               <div className="border border-gray-200 rounded-lg overflow-hidden">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
                     <tr>
-                      {["Category", "Amount", "Share"].map((h) => (
+                      {["Category", "Amount", "Share"].map((heading) => (
                         <th
-                          key={h}
+                          key={heading}
                           className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase"
                         >
-                          {h}
+                          {heading}
                         </th>
                       ))}
                     </tr>
                   </thead>
+
                   <tbody className="bg-white divide-y divide-gray-200">
                     {categoryBreakdown.map((cat) => (
                       <tr key={cat.name}>
@@ -324,7 +345,7 @@ export default function ReportsClient() {
             </section>
           )}
 
-          {/* CSV download */}
+          {/* CSV export */}
           <section>
             <h2 className="text-lg font-semibold text-gray-800 mb-2">
               Export Transactions
@@ -334,6 +355,7 @@ export default function ReportsClient() {
               CSV file. Includes date, description, amount, category, and
               source.
             </p>
+
             <button
               onClick={() => downloadCSV(transactions, selectedMonth)}
               className="px-5 py-2.5 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
@@ -344,7 +366,7 @@ export default function ReportsClient() {
         </>
       )}
 
-      {/* Empty state for selected month */}
+      {/* No transactions for the chosen month */}
       {!loading && !error && transactions.length === 0 && selectedMonth && (
         <div className="p-4 bg-gray-50 border border-gray-200 rounded-lg text-gray-600 text-sm">
           No transactions found for {formatMonth(selectedMonth)}.

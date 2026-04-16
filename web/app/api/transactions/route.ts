@@ -5,7 +5,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { z } from "zod";
 
 const TransactionInputSchema = z.object({
-  date: z.string(), // we'll convert to Date
+  date: z.string(), // Convert to Date before saving
   description: z.string().min(1),
   amount: z.number(),
   category: z.string().optional(),
@@ -28,19 +28,19 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(Number(searchParams.get("limit") ?? 100), 500);
     const batchId = searchParams.get("batchId");
-    const month = searchParams.get("month"); // optional — format: "YYYY-MM"
+    const month = searchParams.get("month"); // Format: YYYY-MM
 
     await connectMongo();
 
     const query: any = { userId: session.user.id };
 
-    // Apply batchId filter if provided
-    if (batchId) query.batchId = batchId;
+    if (batchId) {
+      query.batchId = batchId;
+    }
 
-    // Apply month filter if provided and valid
-    // We check it matches "YYYY-MM" format before using it
     if (month) {
       const isValid = /^\d{4}-\d{2}$/.test(month);
+
       if (!isValid) {
         return Response.json(
           { ok: false, message: "Invalid month format. Use YYYY-MM." },
@@ -48,13 +48,11 @@ export async function GET(request: Request) {
         );
       }
 
-      // Build a date range for the first and last day of that month
+      // Build the date range for the selected month
       const [year, monthNum] = month.split("-").map(Number);
-      const start = new Date(year, monthNum - 1, 1);  // first day
-      const end = new Date(year, monthNum, 1);          // first day of next month
+      const start = new Date(year, monthNum - 1, 1);
+      const end = new Date(year, monthNum, 1);
 
-      // $gte means "greater than or equal", $lt means "less than"
-      // Together they select everything within the month
       query.date = { $gte: start, $lt: end };
     }
 
@@ -92,7 +90,7 @@ export async function POST(request: Request) {
 
     await connectMongo();
 
-    // attach userId from session so it cannot be spoofed from client
+    // Always take userId from the session
     const docsToInsert = parsed.data.transactions.map((t) => ({
       userId: session.user.id,
       date: new Date(t.date),
@@ -114,18 +112,17 @@ export async function POST(request: Request) {
   }
 }
 
-// ── DELETE — remove all transactions for the authenticated user ───────────────
-// User ID comes from session only — never from the request body
-export async function DELETE(request: Request) {
+export async function DELETE() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
 
     await connectMongo();
 
-    // Delete every transaction belonging to this user
+    // Delete all transactions for this user
     const result = await Transaction.deleteMany({ userId: session.user.id });
 
     return Response.json({

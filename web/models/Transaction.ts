@@ -9,7 +9,7 @@ export interface TransactionDoc {
   amount: number;
   category?: string;      // can start as "Unknown"
   source: TransactionSource;
-  batchId: string;        // groups one upload/manual session
+  batchId: string;        // to group together one upload/manual session
   createdAt?: Date;
   updatedAt?: Date;
 }

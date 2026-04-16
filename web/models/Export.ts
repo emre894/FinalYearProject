@@ -1,7 +1,6 @@
-// web/models/Export.ts
 import mongoose, { Schema, Model } from "mongoose";
 
-// Define the Export interface (minimal TypeScript)
+// Define the Export interface
 interface IExport {
   userId: string;
   batchId: string;
@@ -18,17 +17,17 @@ const exportSchema = new Schema<IExport>(
     userId: {
       type: String,
       required: true,
-      index: true, // Indexed for faster queries by user
+      index: true,
     },
     batchId: {
       type: String,
       required: true,
-      index: true, // Indexed for faster queries by batch
+      index: true,
     },
     type: {
       type: String,
       required: true,
-      enum: ["manual"], // Only manual for now
+      enum: ["manual"],
     },
     filename: {
       type: String,
@@ -40,12 +39,11 @@ const exportSchema = new Schema<IExport>(
     },
   },
   {
-    timestamps: true, // Automatically adds createdAt and updatedAt
+    timestamps: true,
   }
 );
 
-// Prevent model overwrite on hot reload (Next.js development)
-// If the model already exists, use it; otherwise create a new one
+// Reuse the model during hot reload in development
 const Export: Model<IExport> =
   mongoose.models.Export || mongoose.model<IExport>("Export", exportSchema);
 

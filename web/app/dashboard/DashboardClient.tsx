@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-
-// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface Transaction {
   _id: string;
@@ -38,31 +36,33 @@ interface DashboardClientProps {
   userEmail: string;
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
+// Format money values as pounds
 const fmt = (amount: number) => `£${Math.abs(amount).toFixed(2)}`;
 
+// Format dates as YYYY-MM-DD
 const fmtDate = (dateString: string) => {
   const d = new Date(dateString);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate()
+  ).padStart(2, "0")}`;
 };
 
-// Maps a pattern label to a background colour so each card looks distinct
+// Give each pattern card a matching colour
 const patternColour = (label: string) => {
-  if (label.includes("Weekend") && label.includes("High"))
+  if (label.includes("Weekend") && label.includes("High")) {
     return "bg-red-50 border-red-200";
-  if (label.includes("Weekend"))
+  }
+  if (label.includes("Weekend")) {
     return "bg-orange-50 border-orange-200";
-  if (label.includes("High"))
+  }
+  if (label.includes("High")) {
     return "bg-yellow-50 border-yellow-200";
+  }
   return "bg-blue-50 border-blue-200";
 };
 
-// ─── Component ────────────────────────────────────────────────────────────────
-
 export default function DashboardClient({ userEmail }: DashboardClientProps) {
-
-  // Transactions state
+  // Transaction summary state
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -81,11 +81,12 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
   const [patternsLoading, setPatternsLoading] = useState(true);
   const [patternsMessage, setPatternsMessage] = useState("");
 
-  // ── Fetch transactions ──────────────────────────────────────────────────────
+  // Load transactions and summary values
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
         setLoading(true);
+
         const res = await fetch("/api/transactions?limit=200");
         const data = await res.json();
 
@@ -99,9 +100,13 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
 
         let spent = 0;
         let income = 0;
+
         data.transactions.forEach((tx: Transaction) => {
-          if (tx.amount < 0) spent += Math.abs(tx.amount);
-          else income += tx.amount;
+          if (tx.amount < 0) {
+            spent += Math.abs(tx.amount);
+          } else {
+            income += tx.amount;
+          }
         });
 
         setTotalSpent(spent);
@@ -117,11 +122,12 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
     fetchTransactions();
   }, []);
 
-  // ── Fetch forecast ──────────────────────────────────────────────────────────
+  // Load forecast preview
   useEffect(() => {
     const fetchForecast = async () => {
       try {
         setForecastLoading(true);
+
         const res = await fetch("/api/analytics/forecast?category=All");
         const data = await res.json();
 
@@ -130,7 +136,7 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
           return;
         }
 
-        // null means not enough data — not an error, just no prediction yet
+        // No prediction yet is not a real error
         if (!data.wma_prediction && data.message) {
           setForecastError(data.message);
           return;
@@ -147,11 +153,12 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
     fetchForecast();
   }, []);
 
-  // ── Fetch patterns ──────────────────────────────────────────────────────────
+  // Load pattern preview
   useEffect(() => {
     const fetchPatterns = async () => {
       try {
         setPatternsLoading(true);
+
         const res = await fetch("/api/analytics/patterns");
         const data = await res.json();
 
@@ -161,6 +168,7 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
         }
 
         setPatterns(data.clusters ?? []);
+
         if (data.clusters?.length === 0) {
           setPatternsMessage(data.message ?? "No patterns found");
         }
@@ -174,25 +182,25 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
     fetchPatterns();
   }, []);
 
-  // ─── Render ─────────────────────────────────────────────────────────────────
-
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
 
-      {/* ── Loading / error / empty states for transactions ── */}
+      {/* Loading state */}
       {loading && (
         <div className="text-center py-8">
           <p className="text-gray-600">Loading transactions...</p>
         </div>
       )}
 
+      {/* Error state */}
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
           {error}
         </div>
       )}
 
+      {/* Empty state */}
       {!loading && !error && totalCount === 0 && (
         <div className="text-center py-12">
           <p className="text-lg text-gray-700 font-medium mb-4">No transactions yet</p>
@@ -206,38 +214,61 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
         </div>
       )}
 
-      {/* ── Stats cards ── */}
       {!loading && !error && totalCount > 0 && (
         <>
+          {/* Summary cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-gray-600 mb-1">Total Transactions</p>
               <p className="text-2xl font-bold text-gray-900">{totalCount}</p>
             </div>
+
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <p className="text-sm text-gray-600 mb-1">Total Income</p>
               <p className="text-2xl font-bold text-green-700">{fmt(totalIncome)}</p>
             </div>
+
             <div className="bg-red-50 border border-red-200 rounded-lg p-4">
               <p className="text-sm text-gray-600 mb-1">Total Spent</p>
               <p className="text-2xl font-bold text-red-700">{fmt(totalSpent)}</p>
             </div>
-            <div className={`border rounded-lg p-4 ${net >= 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}>
+
+            <div
+              className={`border rounded-lg p-4 ${
+                net >= 0 ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"
+              }`}
+            >
               <p className="text-sm text-gray-600 mb-1">Net</p>
-              <p className={`text-2xl font-bold ${net >= 0 ? "text-green-700" : "text-red-700"}`}>
+              <p
+                className={`text-2xl font-bold ${
+                  net >= 0 ? "text-green-700" : "text-red-700"
+                }`}
+              >
                 {fmt(net)}
               </p>
             </div>
           </div>
 
-          {/* ── Forecast section ── */}
+          {/* Forecast preview */}
           <section className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
-              Next Month Spending Forecast
-            </h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Predicted overall spending for next month, based on your transaction history.
-            </p>
+            <div className="flex flex-col gap-2 mb-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                  Next Month Spending Forecast
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Predicted overall spending for next month, based on your transaction
+                  history.
+                </p>
+              </div>
+
+              <Link
+                href="/forecast"
+                className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+              >
+                View full forecast
+              </Link>
+            </div>
 
             {forecastLoading && (
               <p className="text-sm text-gray-500">Calculating forecast...</p>
@@ -251,7 +282,6 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
 
             {!forecastLoading && !forecastError && forecast && (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {/* Months used */}
                 <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
                   <p className="text-sm text-gray-500 mb-1">Based on</p>
                   <p className="text-2xl font-bold text-gray-900">
@@ -262,7 +292,6 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
                   </p>
                 </div>
 
-                {/* WMA prediction */}
                 <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                   <p className="text-sm text-gray-600 mb-1">Weighted Average Forecast</p>
                   <p className="text-2xl font-bold text-purple-700">
@@ -273,7 +302,6 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
                   </p>
                 </div>
 
-                {/* Linear regression prediction */}
                 <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
                   <p className="text-sm text-gray-600 mb-1">Trend-Based Forecast</p>
                   <p className="text-2xl font-bold text-indigo-700">
@@ -287,14 +315,26 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
             )}
           </section>
 
-          {/* ── Pattern detection section ── */}
+          {/* Pattern preview */}
           <section className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-1">
-              Spending Patterns
-            </h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Your transactions have been grouped into behavioural clusters by our ML model.
-            </p>
+            <div className="flex flex-col gap-2 mb-4 md:flex-row md:items-start md:justify-between">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-900 mb-1">
+                  Spending Patterns
+                </h2>
+                <p className="text-sm text-gray-500">
+                  Your transactions have been grouped into behavioural clusters by our ML
+                  model.
+                </p>
+              </div>
+
+              <Link
+                href="/patterns"
+                className="inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 hover:underline"
+              >
+                View full patterns
+              </Link>
+            </div>
 
             {patternsLoading && (
               <p className="text-sm text-gray-500">Detecting patterns...</p>
@@ -316,6 +356,7 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
                     <p className="text-sm font-semibold text-gray-800 mb-3">
                       {cluster.pattern_label}
                     </p>
+
                     <div className="space-y-1 text-sm text-gray-600">
                       <p>
                         <span className="font-medium">Transactions:</span>{" "}
@@ -344,36 +385,49 @@ export default function DashboardClient({ userEmail }: DashboardClientProps) {
             )}
           </section>
 
-          {/* ── Transactions table ── */}
+          {/* Latest transactions */}
           <section>
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Latest Transactions
-            </h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">Latest Transactions</h2>
+
             <div className="overflow-x-auto border border-gray-200 rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    {["Date", "Description", "Amount", "Category", "Source"].map((h) => (
+                    {["Date", "Description", "Amount", "Category", "Source"].map((heading) => (
                       <th
-                        key={h}
+                        key={heading}
                         className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase"
                       >
-                        {h}
+                        {heading}
                       </th>
                     ))}
                   </tr>
                 </thead>
+
                 <tbody className="bg-white divide-y divide-gray-200">
                   {transactions.map((tx) => (
                     <tr key={tx._id}>
-                      <td className="px-4 py-3 text-sm text-gray-900">{fmtDate(tx.date)}</td>
-                      <td className="px-4 py-3 text-sm text-gray-900">{tx.description}</td>
-                      <td className={`px-4 py-3 text-sm font-medium ${tx.amount < 0 ? "text-red-600" : "text-green-600"}`}>
-                        {tx.amount < 0 ? "-" : "+"}{fmt(tx.amount)}
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {fmtDate(tx.date)}
                       </td>
+
+                      <td className="px-4 py-3 text-sm text-gray-900">
+                        {tx.description}
+                      </td>
+
+                      <td
+                        className={`px-4 py-3 text-sm font-medium ${
+                          tx.amount < 0 ? "text-red-600" : "text-green-600"
+                        }`}
+                      >
+                        {tx.amount < 0 ? "-" : "+"}
+                        {fmt(tx.amount)}
+                      </td>
+
                       <td className="px-4 py-3 text-sm text-gray-900">
                         {tx.category || "Unknown"}
                       </td>
+
                       <td className="px-4 py-3 text-sm text-gray-900">
                         <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                           {tx.source}

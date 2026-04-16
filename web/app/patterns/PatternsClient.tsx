@@ -20,6 +20,7 @@ interface ChartCluster {
   colour: string;
 }
 
+// Format money values
 const fmt = (n: number) => `£${Math.abs(n).toFixed(2)}`;
 
 const cardColour = (label: string): string => {
@@ -57,6 +58,7 @@ export default function PatternsClient() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // Load detected spending patterns
   useEffect(() => {
     const fetchPatterns = async () => {
       try {
@@ -100,8 +102,8 @@ export default function PatternsClient() {
         </h1>
         <p className="max-w-2xl text-sm text-gray-500 leading-6">
           Your transactions have been grouped into behavioural clusters using a
-          machine learning model. Each cluster represents a distinct pattern in
-          how and when you spend.
+          machine learning model. Each cluster shows a different spending
+          pattern in your data.
         </p>
       </div>
 
@@ -178,8 +180,7 @@ export default function PatternsClient() {
               Average Spend by Cluster
             </h2>
             <p className="mb-4 text-xs text-gray-400">
-              Each bar represents the average transaction amount within that
-              spending pattern.
+              Each bar shows the average transaction amount for that pattern.
             </p>
 
             <div className="rounded-xl border border-gray-100 bg-white p-3 sm:p-4">
@@ -193,11 +194,9 @@ export default function PatternsClient() {
             </h2>
             <p className="text-sm leading-relaxed text-gray-600">
               K-Means clustering groups similar transactions together based on
-              shared characteristics such as spending amount, day of the week,
-              and month. This helps the system identify common spending
-              behaviours in your data without you having to label them manually.
-              The three groups shown above represent the most distinct patterns
-              found in your transaction history.
+              shared features such as spending amount, day of the week, and
+              month. This helps the system find common spending behaviours
+              without needing manual labels.
             </p>
           </section>
         </>

@@ -4,10 +4,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import bcrypt from "bcryptjs";
 
-// ── GET — return current user info ────────────────────────────────────────────
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -36,11 +36,10 @@ export async function GET(request: Request) {
   }
 }
 
-// ── PATCH — update name or password ───────────────────────────────────────────
-// Body must include a "type" field: either "name" or "password"
 export async function PATCH(request: Request) {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -55,21 +54,24 @@ export async function PATCH(request: Request) {
       return Response.json({ ok: false, message: "User not found" }, { status: 404 });
     }
 
-    // ── Update display name ──────────────────────────────────────────────────
+    // Update display name
     if (type === "name") {
       const { name } = body;
+
       if (!name || name.trim().length === 0) {
         return Response.json(
           { ok: false, message: "Name cannot be empty" },
           { status: 400 }
         );
       }
+
       user.name = name.trim();
       await user.save();
+
       return Response.json({ ok: true, message: "Name updated successfully" });
     }
 
-    // ── Update password ──────────────────────────────────────────────────────
+    // Update password
     if (type === "password") {
       const { currentPassword, newPassword } = body;
 
@@ -87,7 +89,6 @@ export async function PATCH(request: Request) {
         );
       }
 
-      // Verify current password is correct before allowing the change
       const isValid = await bcrypt.compare(currentPassword, user.passwordHash);
       if (!isValid) {
         return Response.json(
@@ -96,16 +97,13 @@ export async function PATCH(request: Request) {
         );
       }
 
-      // Hash the new password before saving
       user.passwordHash = await bcrypt.hash(newPassword, 10);
       await user.save();
+
       return Response.json({ ok: true, message: "Password updated successfully" });
     }
 
-    return Response.json(
-      { ok: false, message: "Invalid update type" },
-      { status: 400 }
-    );
+    return Response.json({ ok: false, message: "Invalid update type" }, { status: 400 });
   } catch (err: any) {
     return Response.json(
       { ok: false, message: err?.message ?? "Unknown error" },

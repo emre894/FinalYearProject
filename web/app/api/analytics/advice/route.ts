@@ -7,9 +7,10 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
+
     if (!session?.user?.id) {
       return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
     }
@@ -25,20 +26,21 @@ export async function GET(request: Request) {
       return Response.json({ ok: false, message: "No transactions found" }, { status: 400 });
     }
 
-    // Compute the facts we need for the prompt
+    // Build the main financial facts
     const expenses = transactions.filter((tx) => tx.amount < 0);
     const totalSpent = expenses.reduce((sum, tx) => sum + Math.abs(tx.amount), 0);
     const totalIncome = transactions
       .filter((tx) => tx.amount >= 0)
       .reduce((sum, tx) => sum + tx.amount, 0);
+
     const netBalance = totalIncome - totalSpent;
 
-    // Category breakdown
     const byCategory: Record<string, number> = {};
     for (const tx of expenses) {
       const cat = tx.category ?? "Unknown";
       byCategory[cat] = (byCategory[cat] ?? 0) + Math.abs(tx.amount);
     }
+
     const categoryList = Object.entries(byCategory)
       .sort((a, b) => b[1] - a[1])
       .map(([name, amount]) => `${name}: £${amount.toFixed(2)}`)
@@ -47,29 +49,27 @@ export async function GET(request: Request) {
     const topCategory = Object.entries(byCategory).sort((a, b) => b[1] - a[1])[0];
     const topCategoryPercent = Math.round((topCategory[1] / totalSpent) * 100);
 
-    // Monthly totals for month-on-month context
     const byMonth: Record<string, number> = {};
     for (const tx of expenses) {
       const month = new Date(tx.date).toISOString().slice(0, 7);
       byMonth[month] = (byMonth[month] ?? 0) + Math.abs(tx.amount);
     }
+
     const sortedMonths = Object.keys(byMonth).sort();
     const monthCount = sortedMonths.length;
 
-    // Determine financial health situation for conditional prompt
-    // Three situations: deficit, cautious, healthy
+    // Pick the prompt style based on the user's position
     const surplusRatio = netBalance / (totalIncome || 1);
     let situation = "";
+
     if (netBalance < 0) {
-      situation = "deficit"; // spending more than income
+      situation = "deficit";
     } else if (surplusRatio < 0.2) {
-      situation = "cautious"; // saving less than 20% of income
+      situation = "cautious";
     } else {
-      situation = "healthy"; // saving 20%+ of income
+      situation = "healthy";
     }
 
-    // Build a conditional prompt based on situation
-    // Each situation gets a different instruction so the advice is relevant
     const situationInstructions: Record<string, string> = {
       deficit: `The user is in a DEFICIT — spending more than their income. 
 Focus your steps on reducing spending and identifying where cuts can be made. 
@@ -112,36 +112,31 @@ Respond with ONLY the summary line and the 3 numbered steps. No extra text.
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 300,
-      temperature: 0.4, // lower temperature = more consistent, structured output
+      temperature: 0.4,
     });
 
     const raw = completion.choices[0]?.message?.content ?? "";
 
-    // Parse the SUMMARY line out of the response
     const summaryMatch = raw.match(/SUMMARY:\s*(.+)/i);
     const summary = summaryMatch ? summaryMatch[1].trim() : "";
 
-    // The rest is the numbered steps (parseSteps happens on the frontend)
+    // Keep the numbered steps as text for the response
     const steps = raw.replace(/SUMMARY:\s*.+/i, "").trim();
 
-      // Parse steps into an array of strings for clean database storage
-      // We reuse the same regex logic from the frontend's parseSteps function
-      const stepStrings = steps
-          .split("\n")
-          .map((l: string) => l.trim())
-          .filter((l: string) => /^\d+\./.test(l))
-          .map((l: string) => l.replace(/^\d+\.\s*/, ""));
+    // Save steps as an array in MongoDB
+    const stepStrings = steps
+      .split("\n")
+      .map((line: string) => line.trim())
+      .filter((line: string) => /^\d+\./.test(line))
+      .map((line: string) => line.replace(/^\d+\.\s*/, ""));
 
-      // Save the action plan to the database
-      Insight.create({
-          userId: session.user.id,
-          type: "action_plan",
-          summary,
-          steps: stepStrings,
-          situation,
-      }).catch((err) => console.error("Failed to save action plan:", err));
-
-return Response.json({ ok: true, summary, steps, situation });
+    Insight.create({
+      userId: session.user.id,
+      type: "action_plan",
+      summary,
+      steps: stepStrings,
+      situation,
+    }).catch((err) => console.error("Failed to save action plan:", err));
 
     return Response.json({ ok: true, summary, steps, situation });
   } catch (err: any) {
