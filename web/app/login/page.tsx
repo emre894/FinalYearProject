@@ -15,21 +15,21 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-
+  
     try {
-      // Use next-auth signIn with credentials provider
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false, // Don't redirect automatically
+        redirect: false,
         callbackUrl: "/upload",
       });
-
+  
       if (result?.error) {
-        // Login failed
         setError("Invalid email or password");
-      } else if (result?.url)
-        window.location.href = result.url;{
+      } else if (result?.url) {
+        window.location.href = result.url;
+      } else {
+        setError("Login succeeded but redirect failed.");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
