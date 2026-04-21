@@ -22,14 +22,14 @@ export default function LoginPage() {
         email,
         password,
         redirect: false, // Don't redirect automatically
+        callbackUrl: "/upload",
       });
 
       if (result?.error) {
         // Login failed
         setError("Invalid email or password");
-      } else {
-        // Login successful - redirect to /upload
-        router.push("/upload");
+      } else if (result?.url)
+        window.location.href = result.url;{
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
