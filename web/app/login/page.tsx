@@ -21,15 +21,14 @@ export default function LoginPage() {
         email,
         password,
         redirect: false,
-        callbackUrl: "/upload",
       });
   
       if (result?.error) {
         setError("Invalid email or password");
-      } else if (result?.url) {
-        window.location.href = result.url;
+      } else if (result?.ok) {
+        router.push("/upload");
       } else {
-        setError("Login succeeded but redirect failed.");
+        setError("An error occurred. Please try again.");
       }
     } catch (err) {
       setError("An error occurred. Please try again.");
