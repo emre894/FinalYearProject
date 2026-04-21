@@ -3,10 +3,11 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import joblib
 from typing import List
+from pathlib import Path
 
-from ml.src.preprocess import clean_text
-from ml.src.forecasting import calculate_wma, calculate_linear_regression
-from ml.src.patterns import detect_spending_patterns
+from src.preprocess import clean_text
+from src.forecasting import calculate_wma, calculate_linear_regression
+from src.patterns import detect_spending_patterns
 
 # create FastAPI app
 app = FastAPI(title="Transaction Category Prediction API")
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "https://finalyearproject-production-1879.up.railway.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -23,8 +25,9 @@ app.add_middleware(
 )
 
 # load saved model and vectorizer
-model = joblib.load("ml/models/model.joblib")
-vectorizer = joblib.load("ml/models/vectorizer.joblib")
+BASE_DIR = Path(__file__).resolve().parent.parent
+model = joblib.load(BASE_DIR / "models" / "model.joblib")
+vectorizer = joblib.load(BASE_DIR / "models" / "vectorizer.joblib")
 
 # define request body model
 class PredictionRequest(BaseModel):
