@@ -142,9 +142,9 @@ python -m venv venv
 source venv/bin/activate      # Mac/Linux
 # or: venv\Scripts\activate   # Windows
 pip install -r requirements.txt
-uvicorn ml.api.main:app --reload
+cd ..
+PYTHONPATH=ml uvicorn ml.api.main:app --reload
 ```
-
 
 ML service runs at `http://localhost:8000`
 API docs available at `http://localhost:8000/docs`
