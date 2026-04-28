@@ -68,8 +68,6 @@ FinalYearProject/
 │   │   └── patterns.py         # K-Means clustering and cluster summarisation
 │   ├── data/                   # Training dataset (labelled transaction descriptions)
 │   └── requirements.txt        # Python dependencies
-│
-└── docs/                       # Project documentation and diagrams
 ```
 
 ---
@@ -114,9 +112,11 @@ Both services must be running for full functionality. The ML service handles cat
 
 ### Environment Variables
 
-Create `web/.env.local` with the following:
+### Environment Variables
 
-```env
+A pre-configured `.env.local` file is included in the submission zip.
+If running from the GitHub repository independently, create `web/.env.local` with:
+
 MONGODB_URI=your_mongodb_connection_string
 NEXTAUTH_SECRET=your_nextauth_secret
 NEXTAUTH_URL=http://localhost:3000
@@ -138,11 +138,13 @@ App runs at `http://localhost:3000`
 
 ```bash
 cd ml
+python -m venv venv
 source venv/bin/activate      # Mac/Linux
 # or: venv\Scripts\activate   # Windows
-
+pip install -r requirements.txt
 uvicorn ml.api.main:app --reload
 ```
+
 
 ML service runs at `http://localhost:8000`
 API docs available at `http://localhost:8000/docs`
